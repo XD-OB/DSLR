@@ -12,6 +12,7 @@
 
 #!/usr/bin/env python3
 
+from describe.math import ft_isNaN, ft_percentile
 from sys import argv
 import pandas as pd
 
@@ -23,8 +24,6 @@ ERROR_NOT_CSV = -3
 # Description dictionary
 description = {}
 
-def     ft_isNaN(nbr):
-    return nbr != nbr
 
 def     exit_usage(error):
     '''
@@ -56,13 +55,6 @@ def     calculate_mean_count(df, nbr_rows, nbr_cols):
                 description['Mean'][col] += n
         description['Mean'][col] /= description['Count'][col]
 
-def     round_up(nbr):
-    '''
-    fcte that round a number UP
-    '''
-    if (nbr - int(nbr)):
-        nbr += 1
-    return int(nbr)
 
 def     calculate_std_percentiles(df, nbr_rows, nbr_cols):
     '''
@@ -81,13 +73,9 @@ def     calculate_std_percentiles(df, nbr_rows, nbr_cols):
         mean = description['Mean'][col]
         ######## Calculate percentile #############
         order_col = sorted(filter(lambda n: not ft_isNaN(n), df.iloc[:, col]))
-        # index of the 25th, 50th, 75th percentile
-        i_25 = round_up(0.25 * count) - 1
-        i_50 = round_up(0.50 * count) - 1
-        i_75 = round_up(0.75 * count) - 1
-        description['25%'][col] = order_col[i_25]
-        description['50%'][col] = order_col[i_50]
-        description['75%'][col] = order_col[i_75]
+        description['25%'][col] = ft_percentile(order_col, 25)
+        description['50%'][col] = ft_percentile(order_col, 50)
+        description['75%'][col] = ft_percentile(order_col, 75)
         ###########################################
         for row in range(nbr_rows):
             n = df.iloc[row, col]
