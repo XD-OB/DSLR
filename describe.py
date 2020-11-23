@@ -56,47 +56,44 @@ def     calculate_mean_count(df, nbr_rows, nbr_cols):
                 description['Mean'][col] += n
         description['Mean'][col] /= description['Count'][col]
 
-
-def     calculate_std(df, nbr_rows, nbr_cols):
+def     round_up(nbr):
     '''
-    Calculate the Standard Deviation for the features and put it in the dictionary
+    fcte that round a number UP
+    '''
+    if (nbr - int(nbr)):
+        nbr += 1
+    return int(nbr)
+
+def     calculate_std_percentiles(df, nbr_rows, nbr_cols):
+    '''
+    Calculate the Standard Deviation & percentiles for the features
+    and put it in the dictionary
     '''
     global  description
 
     description['Std'] = [0] * nbr_cols
-
-    for col in range(nbr_cols):
-        count = description['Count'][col]
-        mean = description['Mean'][col]
-        for row in range(nbr_rows):
-            n = df.iloc[row, col]
-            if not ft_isNaN(n):
-                description['Std'][col] += (n - mean) ** 2
-        description['Std'][col] = (description['Std'][col] / count) ** 0.5
-
-
-def     calculate_percentiles(df, nbr_rows, nbr_cols):
-    '''
-    Calculate the Min & Max for the features and put it in the dictionary
-    '''
-    global  description
-
     description['25%'] = [0] * nbr_cols
     description['50%'] = [0] * nbr_cols
     description['75%'] = [0] * nbr_cols
 
     for col in range(nbr_cols):
-        min = float('-inf')
-        max = float('inf')
+        count = description['Count'][col]
+        mean = description['Mean'][col]
+        ######## Calculate percentile #############
+        order_col = sorted(filter(lambda n: not ft_isNaN(n), df.iloc[:, col]))
+        # index of the 25th, 50th, 75th percentile
+        i_25 = round_up(0.25 * count) - 1
+        i_50 = round_up(0.50 * count) - 1
+        i_75 = round_up(0.75 * count) - 1
+        description['25%'][col] = order_col[i_25]
+        description['50%'][col] = order_col[i_50]
+        description['75%'][col] = order_col[i_75]
+        ###########################################
         for row in range(nbr_rows):
             n = df.iloc[row, col]
             if not ft_isNaN(n):
-                if n < min:
-                    min = n
-                if n > max:
-                    max = n
-        description['Min'][col] = min
-        description['Max'][col] = max
+                description['Std'][col] += (n - mean) ** 2
+        description['Std'][col] = (description['Std'][col] / (count - 1)) ** 0.5
 
 
 def     calculate_min_max(df, nbr_rows, nbr_cols):
@@ -109,8 +106,8 @@ def     calculate_min_max(df, nbr_rows, nbr_cols):
     description['Max'] = [0] * nbr_cols
 
     for col in range(nbr_cols):
-        min = float('-inf')
-        max = float('inf')
+        min = float('inf')
+        max = float('-inf')
         for row in range(nbr_rows):
             n = df.iloc[row, col]
             if not ft_isNaN(n):
@@ -142,11 +139,52 @@ def     fill_description(df):
     '''
     # For the shape:   0 = Rows  |  1 = Columns
     shape = df.shape
+    description['Columns'] = df.columns.values
     calculate_mean_count(df, shape[0], shape[1])
-    calculate_std(df, shape[0], shape[1])
+    calculate_std_percentiles(df, shape[0], shape[1])
     calculate_min_max(df, shape[0], shape[1])
-    calculate_percentiles(df, shape[0], shape[1])
 
+def     print_describe():
+    '''
+    Print the description dictionary in the describe format
+    '''
+    # print columns names
+    print('%7s' % '', end='')
+    for i in range(len(description['Columns'])):
+        print('%15s\t' % ('Feature ' + str(i + 1)), end='')
+    # Print the Count Row
+    print('\n%-7s' % 'Count', end='')
+    for count in description['Count']:
+        print('%15.6f\t' % count, end='')
+    # Print the Mean Row
+    print('\n%-7s' % 'Mean', end='')
+    for mean in description['Mean']:
+        print('%15.6f\t' % mean, end='')
+    # Print the Standard variation Row
+    print('\n%-7s' % 'Std', end='')
+    for std in description['Std']:
+        print('%15.6f\t' % std, end='')
+    # Print the Minimum Row
+    print('\n%-7s' % 'Min', end='')
+    for min in description['Min']:
+        print('%15.6f\t' % min, end='')
+    # Print the 25th percentile Row
+    print('\n%-7s' % '25%', end='')
+    for th_25 in description['25%']:
+        print('%15.6f\t' % th_25, end='')
+    # Print the 50th percentile Row
+    print('\n%-7s' % '50%', end='')
+    for th_50 in description['50%']:
+        print('%15.6f\t' % th_50, end='')
+    # Print the 75th percentile Row
+    print('\n%-7s' % '75%', end='')
+    for th_75 in description['75%']:
+        print('%15.6f\t' % th_75, end='')
+    # Print the Maximum Row
+    print('\n%-7s' % 'Max', end='')
+    for max in description['Max']:
+        print('%15.6f\t' % max, end='')
+    print('')
 
 def     describe():
     '''
@@ -162,7 +200,11 @@ def     describe():
     df = read_clean_df(csvFile)
     fill_description(df)
     print(df)
-    print('-------------------------------------------')
-    print(description['Count'])
+    print('------ description  --------')
+    print(description)
+    print('------ sys describe --------')
+    print(df.describe())
+    print('------  description --------')
+    print_describe()
 
 describe()
