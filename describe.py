@@ -6,7 +6,7 @@
 #    By: obelouch <obelouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/23 09:41:24 by obelouch          #+#    #+#              #
-#    Updated: 2020/11/23 12:49:50 by obelouch         ###   ########.fr        #
+#    Updated: 2020/11/23 14:10:03 by obelouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,11 +23,8 @@ ERROR_NOT_CSV = -3
 # Description dictionary
 description = {}
 
-def ft_isNaN(num):
-    '''
-    Test if it's NAN
-    '''
-    return num != num
+def     ft_isNaN(nbr):
+    return nbr != nbr
 
 def     exit_usage(error):
     '''
@@ -48,7 +45,7 @@ def     calculate_mean_count(df, nbr_rows, nbr_cols):
     '''
     global  description
 
-    description['Count'] = [0] * nbr_cols,
+    description['Count'] = [0] * nbr_cols
     description['Mean'] =  [0] * nbr_cols
 
     for col in range(nbr_cols):
@@ -59,13 +56,14 @@ def     calculate_mean_count(df, nbr_rows, nbr_cols):
                 description['Mean'][col] += n
         description['Mean'][col] /= description['Count'][col]
 
+
 def     calculate_std(df, nbr_rows, nbr_cols):
     '''
     Calculate the Standard Deviation for the features and put it in the dictionary
     '''
     global  description
 
-    description['Std'] = [0] * nbr_cols,
+    description['Std'] = [0] * nbr_cols
 
     for col in range(nbr_cols):
         count = description['Count'][col]
@@ -75,6 +73,54 @@ def     calculate_std(df, nbr_rows, nbr_cols):
             if not ft_isNaN(n):
                 description['Std'][col] += (n - mean) ** 2
         description['Std'][col] = (description['Std'][col] / count) ** 0.5
+
+
+def     calculate_percentiles(df, nbr_rows, nbr_cols):
+    '''
+    Calculate the Min & Max for the features and put it in the dictionary
+    '''
+    global  description
+
+    description['25%'] = [0] * nbr_cols
+    description['50%'] = [0] * nbr_cols
+    description['75%'] = [0] * nbr_cols
+
+    for col in range(nbr_cols):
+        min = float('-inf')
+        max = float('inf')
+        for row in range(nbr_rows):
+            n = df.iloc[row, col]
+            if not ft_isNaN(n):
+                if n < min:
+                    min = n
+                if n > max:
+                    max = n
+        description['Min'][col] = min
+        description['Max'][col] = max
+
+
+def     calculate_min_max(df, nbr_rows, nbr_cols):
+    '''
+    Calculate the Min & Max for the features and put it in the dictionary
+    '''
+    global  description
+
+    description['Min'] = [0] * nbr_cols
+    description['Max'] = [0] * nbr_cols
+
+    for col in range(nbr_cols):
+        min = float('-inf')
+        max = float('inf')
+        for row in range(nbr_rows):
+            n = df.iloc[row, col]
+            if not ft_isNaN(n):
+                if n < min:
+                    min = n
+                if n > max:
+                    max = n
+        description['Min'][col] = min
+        description['Max'][col] = max
+
 
 def     read_clean_df(csvFile):
     '''
@@ -89,6 +135,7 @@ def     read_clean_df(csvFile):
     df = df._get_numeric_data()
     return df
 
+
 def     fill_description(df):
     '''
     Fill the description dictionary with all the features
@@ -96,6 +143,10 @@ def     fill_description(df):
     # For the shape:   0 = Rows  |  1 = Columns
     shape = df.shape
     calculate_mean_count(df, shape[0], shape[1])
+    calculate_std(df, shape[0], shape[1])
+    calculate_min_max(df, shape[0], shape[1])
+    calculate_percentiles(df, shape[0], shape[1])
+
 
 def     describe():
     '''
@@ -108,7 +159,7 @@ def     describe():
     csvFile = argv[1]
     if (not '.csv' in csvFile):
         exit_usage(ERROR_NOT_CSV)
-    df = get_clean_df(csvFile)
+    df = read_clean_df(csvFile)
     fill_description(df)
     print(df)
     print('-------------------------------------------')
