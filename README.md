@@ -10,6 +10,11 @@ that you are able to recreate a magic Sorting Hat using your muggle tools.
 
 You explain to him that in order for your "muggle" tools to work, you need students data. Hesitantly, Professor McGonagall gives you a dusty spellbook. Fortunately for you, a simple "Digitalis!" and the book turned into a USB stick.
 
+## Packages needed
+pip install numpy
+pip install pandas
+pip install matplotlib
+
 ## Owners
 ### ** obelouch ** 1337
 ### ** aelouarg ** 1337

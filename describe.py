@@ -9,15 +9,14 @@
 #    Updated: 2020/11/23 14:10:03 by obelouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
-
 #!/usr/bin/env python3
 
 from describe.print import exit_usage, print_describe
 from describe.math import ft_isNaN, ft_percentile
 from describe.description import get_description
 from os.path import isfile
+from pandas import read_csv
 from sys import argv
-import pandas as pd
 import describe.consts
 
 
@@ -31,7 +30,7 @@ def     read_clean_df(csvFile):
     # Test format of the file === CSV
     if not '.csv' in csvFile:
         exit_usage(ERROR_NOT_CSV)
-    df = pd.read_csv(
+    df = read_csv(
             csvFile,
             # Set Index 0 as Row name
             index_col = 0,
