@@ -39,13 +39,19 @@ def     display_histograms(df):
     df_hufflepuff = df[df['Hogwarts House'] == 'Hufflepuff']
     df_slytherin = df[df['Hogwarts House'] == 'Slytherin']
     df_ravenclaw = df[df['Hogwarts House'] == 'Ravenclaw']
+    # Init Figure
+    figure = plt.figure(figsize=(12,8))
+    ax = []
+    i = 0
+    ###
     for col in df.columns:
         if col == 'Hogwarts House':
             continue
+        ax.append(figure.add_subplot(4,4,i + 1))
         ### Ravenclaw Histogram
         myarray = df_ravenclaw.loc[:, col]
         myarray = myarray[~isnan(myarray)]
-        plt.hist(
+        ax[i].hist(
             myarray,
             bins=20,
             alpha=0.4,
@@ -55,7 +61,7 @@ def     display_histograms(df):
         ### Hufflepuff Histogram
         myarray = df_hufflepuff.loc[:, col]
         myarray = myarray[~isnan(myarray)]
-        plt.hist(
+        ax[i].hist(
             myarray,
             bins=20,
             alpha=0.5,
@@ -65,7 +71,7 @@ def     display_histograms(df):
         ### Gryffindor Histogram
         myarray = df_gryffindor.loc[:, col]
         myarray = myarray[~isnan(myarray)]
-        plt.hist(
+        ax[i].hist(
             myarray,
             bins=20,
             alpha=0.4,
@@ -75,7 +81,7 @@ def     display_histograms(df):
         ### Slytherin Histogram
         myarray = df_slytherin.loc[:, col]
         myarray = myarray[~isnan(myarray)]
-        plt.hist(
+        ax[i].hist(
             myarray,
             bins=20,
             alpha=0.4,
@@ -83,10 +89,15 @@ def     display_histograms(df):
             label='Slytherin',
         )
         ######
-        plt.title('Histogram of ' + col)
-        plt.legend(loc='upper right')
-        plt.show()
-        # break ########################################
+        i+=1
+    # Legend
+    plt.legend(
+        bbox_to_anchor=(1.5,1),
+        loc='upper left',
+        borderaxespad=0
+    )
+    # Show
+    plt.show()
         
 
 
