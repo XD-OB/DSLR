@@ -11,13 +11,18 @@
 # **************************************************************************** #
 #!/usr/bin/env python3
 
-from describe.print import exit_usage, print_describe
-from describe.math import ft_isNaN, ft_percentile
-from describe.description import get_description
+from describes.print import exit_usage, print_describe
+from mylib.math import ft_isNaN, ft_percentile
+from describes.description import get_description
 from os.path import isfile
 from pandas import read_csv
 from sys import argv
-import describe.consts
+
+# Errors Numbers
+ERROR_NO_ARG = -1
+ERROR_ARG_NBR = -2
+ERROR_NOT_CSV = -3
+ERROR_NOT_FILE = -4
 
 
 def     read_clean_df(csvFile):

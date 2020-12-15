@@ -10,7 +10,7 @@
 #                                                                              #
 # **************************************************************************** #
 
-from describe.math import ft_percentile, ft_isNaN
+from mylib.math import ft_percentile, ft_isNaN
 
 
 def     calculate_mean_count(df, description, nbr_rows, nbr_cols):
