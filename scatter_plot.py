@@ -11,34 +11,46 @@
 # **************************************************************************** #
 #!/usr/bin/env python3
 
+from visualizations.display_scatter import display_scatter_2f
 from visualizations.get_df_houses import get_df_houses
-import visualizations.display_scatter as ds
 import mylib.math as myMath
 import sys
 
+# Global Variables:
+COURSE1 = 'Arithmancy'
+COURSE2 = 'Astronomy'
 
 def     is_show_all():
     '''
     Test if the detail flag is present
     '''
-    if len(sys.argv) != 2:
-        return False
+    
     if sys.argv[1] == '-d' or sys.argv[1] == '--details':
         return True
     return False
+
+
+def     pick_features():
+    '''
+    Pick the features to scatter if the syntax is correct
+    '''
+    if len(sys.argv) != 2:
+        print('error')
+        exit(1)
+    if ()
+    
 
 
 def     scatter_plot():
     '''
     displays a scatter plot That show thee 2 features that are similar
     '''
+    if len(sys.argv) > 1:
+        pick_features()
     # get dictionary of dataframes from a csv file
     df_houses = get_df_houses('ressources/dataset_train.csv')
-    # Show all option
-    if is_show_all():
-        ds.display_scatters(df_houses)
-    # Display the Histogram of the homogenous course (Arithmancy)
-    ##dh.display_arithmancy_histogram(df_houses)
+    # Display the Scatter of the 2 similar features
+    display_scatter_2f(df_houses, COURSE1, COURSE2)
 
 
 # Launch the program

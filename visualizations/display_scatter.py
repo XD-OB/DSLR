@@ -13,128 +13,79 @@
 import matplotlib.pyplot as plt
 from numpy import isnan
 
-COURSE = 'Care of Magical Creatures'
 
-def     display_scatters(df_houses):
+def     get_house_courses(df_houses, house, course1, course2):
     '''
-    Display Scatters of the Houses
+    Get a Dataframe of 2 columns (course1, course2) and return a Dictionary of course1 & course2
+    without NaNs values
+    '''
+    # Select the 2 columns from the house dataframe
+    col1 = df_houses[house].loc[:, course1]
+    col2 = df_houses[house].loc[:, course2]
+    # Clean indexs
+    indexs = [(~isnan(x) and ~isnan(y)) for x, y in zip(col1, col2)]
+    # Remove the lines that contain a NaN Value
+    courses = {
+        course1: list(col1[indexs]),
+        course2: list(col2[indexs]),
+    }
+    return courses
+
+
+def     display_scatter_2f(df_houses, course1, course2):
+    '''
+    Display Scatter plot of the 2 features that are similar
     '''
     # Init Figure
-    figure = plt.figure(figsize=(13,9))
-    # Add Padding between subplots
-    figure.subplots_adjust(hspace=.5)
+    figure = plt.figure(figsize=(10,8))
     # Set Window Title
-    figure.canvas.set_window_title('Histogram of each course')
-    ax = []
-    i = 0
-    ###
-    for col in list(df_houses['G'].columns)[1:]:
-        ax.append(figure.add_subplot(4,4,i + 1))
-        ### Ravenclaw Histogram
-        myarray = df_houses['R'].loc[:, col]
-        myarray = myarray[~isnan(myarray)]
-        ax[i].hist(
-            myarray,
-            alpha=0.4,
-            bins='auto',
-            color='#0000FF',
-            label='Ravenclaw',
-        )
-        ### Hufflepuff Histogram
-        myarray = df_houses['H'].loc[:, col]
-        myarray = myarray[~isnan(myarray)]
-        ax[i].hist(
-            myarray,
-            alpha=0.5,
-            bins='auto',
-            color='#CCCC00',
-            label='Hufflepuff',
-        )
-        ### Gryffindor Histogram
-        myarray = df_houses['G'].loc[:, col]
-        myarray = myarray[~isnan(myarray)]
-        ax[i].hist(
-            myarray,
-            alpha=0.4,
-            bins='auto',
-            color='#FF0000',
-            label='Gryffindor',
-        )
-        ### Slytherin Histogram
-        myarray = df_houses['S'].loc[:, col]
-        myarray = myarray[~isnan(myarray)]
-        ax[i].hist(
-            myarray,
-            alpha=0.4,
-            bins='auto',
-            color='#00FF00',
-            label='Slytherin',
-        )
-        ######
-        ax[i].set_title(col)
-        i+=1
-    plt.legend(
-        bbox_to_anchor=(1.5,1),
-        loc='upper left',
-        borderaxespad=0
+    figure.canvas.set_window_title(f'Scatter of the courses  " {course1} " and " {course2} "')
+    ### Ravenclaw Scatter
+    # Courses Clean Dictionary
+    courses = get_house_courses(df_houses, 'R', course1, course2)
+    plt.scatter(
+        courses[course1],
+        courses[course2],
+        alpha=0.4,
+        color='#0000FF',
+        label='Ravenclaw',
     )
+    # ### Hufflepuff Scatter
+    # Courses Clean Dictionary
+    courses = get_house_courses(df_houses, 'H', course1, course2)
+    plt.scatter(
+        courses[course1],
+        courses[course2],
+        alpha=0.5,
+        color='#CCCC00',
+        label='Hufflepuff',
+    )
+    ### Gryffindor Scatter
+    # Courses Clean Dictionary
+    courses = get_house_courses(df_houses, 'G', course1, course2)
+    plt.scatter(
+        courses[course1],
+        courses[course2],
+        alpha=0.4,
+        color='#FF0000',
+        label='Gryffindor',
+    )
+    ### Slytherin Scatter
+    # Courses Array
+    courses = get_house_courses(df_houses, 'S', course1, course2)
+    plt.scatter(
+        courses[course1],
+        courses[course2],
+        alpha=0.4,
+        color='#00FF00',
+        label='Slytherin',
+    )
+    #########
+    plt.title(f'Scatter "{course1}" with "{course2}"')
+    plt.legend(loc='upper left')
+    plt.ylabel(course2)
+    plt.xlabel(course1)
+    # Adds major gridlines
+    plt.grid(color='grey', linestyle='-', linewidth=0.25, alpha=0.5)
     # Show
     plt.show()
-
-
-# def     display_arithmancy_histogram(df_houses):
-#     '''
-#     Display the histogram of the course that have homogeneous score
-#     distribution between all four houses
-#     '''
-#     # Init Figure
-#     figure = plt.figure(figsize=(10,8))
-#     # Set Window Title
-#     figure.canvas.set_window_title('Histogram of the course  " Care of Magical Creatures "')
-#     ### Ravenclaw Histogram
-#     myarray = df_houses['R'].loc[:, COURSE]
-#     myarray = myarray[~isnan(myarray)]
-#     plt.hist(
-#         myarray,
-#         alpha=0.4,
-#         bins='auto',
-#         color='#0000FF',
-#         label='Ravenclaw',
-#     )
-#     ### Hufflepuff Histogram
-#     myarray = df_houses['H'].loc[:, COURSE]
-#     myarray = myarray[~isnan(myarray)]
-#     plt.hist(
-#         myarray,
-#         alpha=0.5,
-#         bins='auto',
-#         color='#CCCC00',
-#         label='Hufflepuff',
-#     )
-#     ### Gryffindor Histogram
-#     myarray = df_houses['G'].loc[:, COURSE]
-#     myarray = myarray[~isnan(myarray)]
-#     plt.hist(
-#         myarray,
-#         alpha=0.4,
-#         bins='auto',
-#         color='#FF0000',
-#         label='Gryffindor',
-#     )
-#     ### Slytherin Histogram
-#     myarray = df_houses['S'].loc[:, COURSE]
-#     myarray = myarray[~isnan(myarray)]
-#     plt.hist(
-#         myarray,
-#         alpha=0.4,
-#         bins='auto',
-#         color='#00FF00',
-#         label='Slytherin',
-#     )
-#     ########
-#     plt.legend(loc='upper left')
-#     plt.ylabel('number of students')
-#     plt.xlabel('Marks')
-#     plt.title(COURSE)
-#     # Show
-#     plt.show()

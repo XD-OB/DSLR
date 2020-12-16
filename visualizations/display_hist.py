@@ -136,5 +136,7 @@ def     display_arithmancy_histogram(df_houses):
     plt.ylabel('number of students')
     plt.xlabel('Marks')
     plt.title(COURSE)
+    # Adds major gridlines
+    plt.grid(color='grey', linestyle='-', linewidth=0.25, alpha=0.5)
     # Show
     plt.show()
