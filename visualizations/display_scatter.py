@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    display_scatter.py                                 :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: obelouch <obelouch@student.1337.ma>        +#+  +:+       +#+         #
+#    By: obelouch <obelouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/25 12:41:15 by obelouch          #+#    #+#              #
-#    Updated: 2020/11/25 12:41:15 by obelouch         ###   ########.fr        #
+#    Updated: 2020/12/17 05:52:37 by obelouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,10 +32,13 @@ def     get_house_courses(df_houses, house, course1, course2):
     return courses
 
 
-def     display_scatter_2f(df_houses, course1, course2):
+def     display_scatter_2f(df_houses, f1, f2):
     '''
-    Display Scatter plot of the 2 features that are similar
+    Display Scatter plot of the 2 features passed in arguments
     '''
+    # Get Courses:
+    course1 = df_houses['R'].columns[f1]
+    course2 = df_houses['R'].columns[f2]
     # Init Figure
     figure = plt.figure(figsize=(10,8))
     # Set Window Title
