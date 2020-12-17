@@ -3,17 +3,16 @@
 #                                                         :::      ::::::::    #
 #    histogram.py                                       :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: obelouch <obelouch@student.1337.ma>        +#+  +:+       +#+         #
+#    By: obelouch <obelouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/24 17:31:50 by obelouch          #+#    #+#              #
-#    Updated: 2020/11/24 17:31:50 by obelouch         ###   ########.fr        #
+#    Updated: 2020/12/17 06:12:37 by obelouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
-#!/usr/bin/env python3
+
 
 from visualizations.get_df_houses import get_df_houses
 import visualizations.display_hist as dh
-import mylib.math as myMath
 import sys
 
 
