@@ -6,15 +6,13 @@
 #    By: obelouch <obelouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/17 05:53:20 by obelouch          #+#    #+#              #
-#    Updated: 2020/12/17 06:19:42 by obelouch         ###   ########.fr        #
+#    Updated: 2020/12/17 23:32:36 by obelouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-from visualizations.display_pairPlot import display_pairPlot
-from visualizations.get_df_houses import get_df_houses
 import matplotlib.pyplot as plt
-import pandas as pd
 import seaborn as sns
+import pandas as pd
 
 
 def     pair_plot():
@@ -34,6 +32,8 @@ def     pair_plot():
         'Hufflepuff':'#CCCC00',
         'Slytherin':'#00FF00',
     }
+    # Set the theme of the subplots
+    sns.set_theme(font_scale=0.52)
     # Pair Plot using 'Seaborn'
     sns.pairplot(
         data= df,
@@ -43,9 +43,9 @@ def     pair_plot():
             'alpha':0.4,
             's': 5
         },
-        height= 2,
+        corner=True,
+        height= 1.1,
     )
-    plt.suptitle('Courses pair plot')
     # Show
     plt.show()
 
