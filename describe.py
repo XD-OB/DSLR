@@ -6,10 +6,10 @@
 #    By: obelouch <obelouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/23 09:41:24 by obelouch          #+#    #+#              #
-#    Updated: 2020/11/23 14:10:03 by obelouch         ###   ########.fr        #
+#    Updated: 2020/12/18 23:57:33 by obelouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
-#!/usr/bin/env python3
+
 
 from describes.print import exit_usage, print_describe
 from mylib.math import ft_isNaN, ft_percentile
@@ -36,7 +36,7 @@ def     get_filename():
     return filename
 
 
-def     read_clean_csv(csvFile):
+def     get_df_from_csv(csvFile):
     '''
     Read the CSV & transform it to DataFrame 
     '''
@@ -57,7 +57,7 @@ def     describe():
     The Describe Program
     '''
     csvFile = get_filename()
-    df = read_clean_csv(csvFile)
+    df = get_df_from_csv(csvFile)
     description = get_description(df)
     # print(df)
     # print('------ description  --------')

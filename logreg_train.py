@@ -6,7 +6,7 @@
 #    By: obelouch <obelouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/18 18:36:47 by obelouch          #+#    #+#              #
-#    Updated: 2020/12/18 18:36:47 by obelouch         ###   ########.fr        #
+#    Updated: 2020/12/19 00:00:38 by obelouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -66,19 +66,21 @@ def     get_filename():
     return filename
 
 
-def     read_clean_csv(csvFile):
+def     get_df_from_csv(csvFile):
     '''
-    Read the CSV & transform it to DataFrame 
+    Read the CSV & return the dataframe with the selected features
     '''
     try:
         df = pd.read_csv(
                 csvFile,
                 # Columns to include
-                usecols=[1, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]
+                usecols=[1, 8, 9, 10, 11, 12, 13, 17, 18]
             )
     except:
         print('Can\'t transform the CSV into dataframe!')
         exit(1)
+    # drop the rows that contain a NAN value
+    df = df.dropna()
     return df
 
 
@@ -88,8 +90,10 @@ def     logreg_train():
     '''
     # Check and get the CSV filename
     filename = get_filename()
-    df = read_clean_csv(filename)
-    X = df.iloc[:, 6:]
+    df = get_df_from_csv(filename)
+    # The X (features) Matrice [m x 8]
+    X = df.iloc[:, 1:]
+    # The Y (labels) Vector [m x 1]
     Y = df['Hogwarts House']
     print('-------------------  X  ---------------------')
     print(X)
