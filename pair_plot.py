@@ -6,7 +6,7 @@
 #    By: obelouch <obelouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/17 05:53:20 by obelouch          #+#    #+#              #
-#    Updated: 2020/12/17 23:32:36 by obelouch         ###   ########.fr        #
+#    Updated: 2020/12/18 04:31:46 by obelouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,13 +37,13 @@ def     pair_plot():
     # Pair Plot using 'Seaborn'
     sns.pairplot(
         data= df,
+        diag_kind="hist",
         hue= "Hogwarts House",
         palette= houses_palette,
         plot_kws= {
             'alpha':0.4,
             's': 5
         },
-        corner=True,
         height= 1.1,
     )
     # Show
