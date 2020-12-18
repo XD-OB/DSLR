@@ -37,7 +37,7 @@ def     pair_plot():
     # Pair Plot using 'Seaborn'
     sns.pairplot(
         data= df,
-        diag_kind="hist",
+        #diag_kind="hist",
         hue= "Hogwarts House",
         palette= houses_palette,
         plot_kws= {

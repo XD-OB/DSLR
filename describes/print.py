@@ -10,25 +10,26 @@
 #                                                                              #
 # **************************************************************************** #
 
-# Errors Numbers
-ERROR_NO_ARG = -1
-ERROR_ARG_NBR = -2
-ERROR_NOT_CSV = -3
-ERROR_NOT_FILE = -4
+from mylib.consts import bcolors, errors
+
 
 def     exit_usage(error):
     '''
-    Print the Usage & the Error Msg then Exit
+    Print the error Msg and Exit 
     '''
-    if (error == ERROR_NO_ARG):
-        print('Error: No argument!')
-    elif (error == ERROR_ARG_NBR):
-        print('Error: Wrong number of arguments!')
-    elif (error == ERROR_NOT_CSV):
-        print('Error: Wrong format of the file!')
-    elif (error == ERROR_NOT_FILE):
-        print('Error: File not Found!')
-    print('Usage: ./describe < CSV dataset >')
+    print(f'\n{bcolors.FAIL}Error{bcolors.ENDC}: ', end='')
+    if error == errors.ARG_NBR:
+        print('Wrong number of arguments!')
+    elif error == errors.NO_ARG:
+        print('No file is provided!')
+    elif error == errors.NOT_FILE:
+        print('File not found!')
+    elif error == errors.NOT_CSV:
+        print('Wrong file extension, accept only CSV!')
+    else:
+        print('Can\'t read the file!')
+    print(f'{bcolors.WARNING}Usage{bcolors.ENDC}: ', end='')
+    print('python3 describe.py < csv_dataset >')
     exit(1)
 
 

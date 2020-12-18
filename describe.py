@@ -14,34 +14,41 @@
 from describes.print import exit_usage, print_describe
 from mylib.math import ft_isNaN, ft_percentile
 from describes.description import get_description
-from os.path import isfile
-from pandas import read_csv
-from sys import argv
-
-# Errors Numbers
-ERROR_NO_ARG = -1
-ERROR_ARG_NBR = -2
-ERROR_NOT_CSV = -3
-ERROR_NOT_FILE = -4
+from mylib.consts import errors
+from os import path
+import pandas as pd
+import sys
 
 
-def     read_clean_df(csvFile):
+def     get_filename():
+    '''
+    Take and check the dataset file from the argument
+    '''
+    if len(sys.argv) > 2:
+        exit_usage(errors.ARG_NBR)
+    if len(sys.argv) == 1:
+        exit_usage(errors.NO_ARG)
+    filename = sys.argv[1]
+    if not path.isfile(filename):
+        exit_usage(errors.NOT_FILE)
+    if not filename.endswith('.csv'):
+        exit_usage(errors.NOT_CSV)
+    return filename
+
+
+def     read_clean_csv(csvFile):
     '''
     Read the CSV & transform it to DataFrame 
     '''
-    # Test file exist
-    if not isfile(csvFile):
-        exit_usage(ERROR_NOT_FILE)
-    # Test format of the file === CSV
-    if not '.csv' in csvFile:
-        exit_usage(ERROR_NOT_CSV)
-    df = read_csv(
-            csvFile,
-            # Set Index 0 as Row name
-            index_col = 0,
-        )
-    # Drop all none numerical columns
-    df = df._get_numeric_data()
+    try:
+        df = pd.read_csv(
+                csvFile,
+                # Columns to include
+                usecols=[6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]
+            )
+    except:
+        print('Can\'t transform the CSV into dataframe!')
+        exit(1)
     return df
 
 
@@ -49,12 +56,8 @@ def     describe():
     '''
     The Describe Program
     '''
-    if len(argv) == 1:
-        exit_usage(ERROR_NO_ARG)
-    if len(argv) > 2:
-        exit_usage(ERROR_ARG_NBR)
-    csvFile = argv[1]
-    df = read_clean_df(csvFile)
+    csvFile = get_filename()
+    df = read_clean_csv(csvFile)
     description = get_description(df)
     # print(df)
     # print('------ description  --------')
