@@ -13,6 +13,7 @@
 from mylib.csvTools import get_df_from_csv
 from mylib.consts import bcolors, errors
 from mylib.math import sigmoid, ft_max
+from src.standarize import standarize_X
 from os import path
 import pandas as pd
 import numpy as np
@@ -105,7 +106,7 @@ def     logreg_predict():
     X = np.concatenate(
         (
             np.ones((testSet.shape[0], 1)),
-            np.array(testSet.iloc[:, 1:]),
+            standarize_X(testSet.iloc[:, 1:]),
         ),
         # concat in columns
         axis=1

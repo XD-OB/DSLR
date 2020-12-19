@@ -26,6 +26,7 @@
 
 from mylib.csvTools import get_df_from_csv
 from mylib.consts import bcolors, errors
+from src.standarize import standarize_X
 from os import path
 import pandas as pd
 import numpy as np
@@ -68,13 +69,21 @@ def     get_filename():
     return filename
 
 
+def     get_Y(labels, house):
+    '''
+    Create the One vs All Ys
+    '''
+    Y = np.array([int(y == house) for y in labels])
+    return np.transpose(Y)
+
+
 def     logreg_train():
     '''
     Train the logistic regression model with the dataset_train 
     '''
     # Check and get the CSV filename
     filename = get_filename()
-    df = get_df_from_csv(
+    trainSet = get_df_from_csv(
         filename,
         [1, 8, 9, 10, 11, 12, 13, 17, 18]
     )
@@ -82,18 +91,24 @@ def     logreg_train():
     # (remove the index column and add X0 column full of 1):
     X = np.concatenate(
         (
-            np.ones(df.shape[0], 1),
-            df['Index'],
+            np.ones((trainSet.shape[0], 1)),
+            standarize_X(trainSet.iloc[:, 1:]),
         ),
         # concat in columns
         axis=1
     )
     # The Y (labels) Vector [m x 1]
-    Y = df['Hogwarts House']
-    print('-------------------  X  ---------------------')
-    print(X)
-    print('-------------------  Y  ---------------------')
-    print(Y)
+    labels = trainSet['Hogwarts House']
+    # Dictionary of Y for each House classificator
+    Y = {
+        'G': get_Y(labels, 'Gryffindor'),
+        'R': get_Y(labels, 'Ravenclaw'),
+        'H': get_Y(labels, 'Hufflepuff'),
+        'S': get_Y(labels, 'Slytherin'),
+    }
+    # print(f'-------------------  X  ---------------------\n{X}')
+    # print(f'-------------------  Y  ---------------------\n{Y}')
+    #print(Y)
 
 
 # Launch the Logistic Regression training:

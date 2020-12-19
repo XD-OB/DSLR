@@ -97,15 +97,12 @@ def     ft_standardized(myList):
     '''
     Standarize a list of data
     '''
-    # Remove the NAN values
-    myList = myList[~np.isnan(myList)]
-    ###
     mean = ft_mean(myList)
     std = ft_std(myList)
     Z = []
     for value in myList:
         Z.append((value - mean) / std)
-    return Z
+    return np.array(Z)
 
 
 def     ft_mean(myarray):
