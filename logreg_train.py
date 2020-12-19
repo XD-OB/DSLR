@@ -6,7 +6,7 @@
 #    By: obelouch <obelouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/18 18:36:47 by obelouch          #+#    #+#              #
-#    Updated: 2020/12/19 00:00:38 by obelouch         ###   ########.fr        #
+#    Updated: 2020/12/19 00:50:31 by obelouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,7 @@
 #                                                                              #
 ################################################################################
 
+from mylib.csvTools import get_df_from_csv
 from mylib.consts import bcolors, errors
 from os import path
 import pandas as pd
@@ -46,7 +47,7 @@ def     exit_usage(error):
     else:
         print('Can\'t read the file!')
     print(f'{bcolors.WARNING}Usage{bcolors.ENDC}: ', end='')
-    print('python3 logreg_train.py <_train dataset path_>')
+    print('python3 logreg_train.py <_train dataset_>')
     exit(1)
 
 
@@ -66,31 +67,16 @@ def     get_filename():
     return filename
 
 
-def     get_df_from_csv(csvFile):
-    '''
-    Read the CSV & return the dataframe with the selected features
-    '''
-    try:
-        df = pd.read_csv(
-                csvFile,
-                # Columns to include
-                usecols=[1, 8, 9, 10, 11, 12, 13, 17, 18]
-            )
-    except:
-        print('Can\'t transform the CSV into dataframe!')
-        exit(1)
-    # drop the rows that contain a NAN value
-    df = df.dropna()
-    return df
-
-
 def     logreg_train():
     '''
     Train the logistic regression model with the dataset_train 
     '''
     # Check and get the CSV filename
     filename = get_filename()
-    df = get_df_from_csv(filename)
+    df = get_df_from_csv(
+        filename,
+        [1, 8, 9, 10, 11, 12, 13, 17, 18]
+    )
     # The X (features) Matrice [m x 8]
     X = df.iloc[:, 1:]
     # The Y (labels) Vector [m x 1]
