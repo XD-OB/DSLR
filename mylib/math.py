@@ -3,14 +3,59 @@
 #                                                         :::      ::::::::    #
 #    math.py                                            :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: obelouch <obelouch@student.1337.ma>        +#+  +:+       +#+         #
+#    By: obelouch <obelouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/25 12:26:44 by obelouch          #+#    #+#              #
-#    Updated: 2020/11/25 12:26:44 by obelouch         ###   ########.fr        #
+#    Updated: 2020/12/19 04:21:20 by obelouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-from numpy import floor, ceil, isnan
+from re import match
+import numpy as np
+
+def     sigmoid(z):
+    '''
+    Sigmoid fonction
+    '''
+    return 1 / (1 + np.exp(z))
+
+
+def     ft_sum(array):
+    '''
+    Sum all nbrs in an array
+    '''
+    sum = 0
+    for i in array:
+        sum += i
+    return sum
+
+
+def     ft_arrayPower(array, n):
+    '''
+    Apply the power to the array
+    '''
+    for i in len(array):
+        array[i] = array[i] ** n
+    return array
+
+
+def     ft_arraySquare(array):
+    '''
+    Apply the power to the array
+    '''
+    for i in range(len(array)):
+        array[i] = array[i] ** 2
+    return array
+
+
+def     ft_isFloat(value):
+    '''
+    Check if the string is a float
+    '''
+    if value and match(r'^[0-9]+(\.[0-9]+)?$', value):
+        return True
+    return False
+
 
 
 def     ft_isNaN(nbr):
@@ -37,8 +82,8 @@ def     ft_percentile(ordList, i_th):
     Take a ordered List with the rank in percent then return the percentile  
     '''
     index = (i_th / 100) * (len(ordList) - 1)
-    i_f = floor(index)
-    i_c = ceil(index)
+    i_f = np.floor(index)
+    i_c = np.ceil(index)
 
     if i_f == i_c:
         return ordList[int(index)]
@@ -52,15 +97,12 @@ def     ft_standardized(myList):
     '''
     Standarize a list of data
     '''
-    # Remove the NAN values
-    myList = myList[~isnan(myList)]
-    ###
     mean = ft_mean(myList)
     std = ft_std(myList)
     Z = []
     for value in myList:
         Z.append((value - mean) / std)
-    return Z
+    return np.array(Z)
 
 
 def     ft_mean(myarray):

@@ -6,7 +6,7 @@
 #    By: obelouch <obelouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/18 18:36:47 by obelouch          #+#    #+#              #
-#    Updated: 2020/12/19 00:00:38 by obelouch         ###   ########.fr        #
+#    Updated: 2020/12/19 00:50:31 by obelouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,9 +24,12 @@
 #                                                                              #
 ################################################################################
 
+from mylib.csvTools import get_df_from_csv
 from mylib.consts import bcolors, errors
+from src.standarize import standarize_X
 from os import path
 import pandas as pd
+import numpy as np
 import sys
 
 
@@ -46,7 +49,7 @@ def     exit_usage(error):
     else:
         print('Can\'t read the file!')
     print(f'{bcolors.WARNING}Usage{bcolors.ENDC}: ', end='')
-    print('python3 logreg_train.py <_train dataset path_>')
+    print('python3 logreg_train.py <_train dataset_>')
     exit(1)
 
 
@@ -66,22 +69,12 @@ def     get_filename():
     return filename
 
 
-def     get_df_from_csv(csvFile):
+def     get_Y(labels, house):
     '''
-    Read the CSV & return the dataframe with the selected features
+    Create the One vs All Ys
     '''
-    try:
-        df = pd.read_csv(
-                csvFile,
-                # Columns to include
-                usecols=[1, 8, 9, 10, 11, 12, 13, 17, 18]
-            )
-    except:
-        print('Can\'t transform the CSV into dataframe!')
-        exit(1)
-    # drop the rows that contain a NAN value
-    df = df.dropna()
-    return df
+    Y = np.array([int(y == house) for y in labels])
+    return np.transpose(Y)
 
 
 def     logreg_train():
@@ -90,15 +83,32 @@ def     logreg_train():
     '''
     # Check and get the CSV filename
     filename = get_filename()
-    df = get_df_from_csv(filename)
-    # The X (features) Matrice [m x 8]
-    X = df.iloc[:, 1:]
+    trainSet = get_df_from_csv(
+        filename,
+        [1, 8, 9, 10, 11, 12, 13, 17, 18]
+    )
+    # The X (features) Matrice [m x 9]
+    # (remove the index column and add X0 column full of 1):
+    X = np.concatenate(
+        (
+            np.ones((trainSet.shape[0], 1)),
+            standarize_X(trainSet.iloc[:, 1:]),
+        ),
+        # concat in columns
+        axis=1
+    )
     # The Y (labels) Vector [m x 1]
-    Y = df['Hogwarts House']
-    print('-------------------  X  ---------------------')
-    print(X)
-    print('-------------------  Y  ---------------------')
-    print(Y)
+    labels = trainSet['Hogwarts House']
+    # Dictionary of Y for each House classificator
+    Y = {
+        'G': get_Y(labels, 'Gryffindor'),
+        'R': get_Y(labels, 'Ravenclaw'),
+        'H': get_Y(labels, 'Hufflepuff'),
+        'S': get_Y(labels, 'Slytherin'),
+    }
+    # print(f'-------------------  X  ---------------------\n{X}')
+    # print(f'-------------------  Y  ---------------------\n{Y}')
+    #print(Y)
 
 
 # Launch the Logistic Regression training:
