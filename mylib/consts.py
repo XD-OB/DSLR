@@ -6,7 +6,7 @@
 #    By: obelouch <obelouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/18 20:09:04 by obelouch          #+#    #+#              #
-#    Updated: 2020/12/18 20:09:04 by obelouch         ###   ########.fr        #
+#    Updated: 2020/12/19 04:11:34 by obelouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,3 +34,4 @@ class   errors:
     ARG_NBR = 2
     NOT_CSV = 3
     NOT_FILE = 4
+    WEIGHTS_DIM = 4
