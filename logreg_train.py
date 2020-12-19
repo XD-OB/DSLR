@@ -28,6 +28,7 @@ from mylib.csvTools import get_df_from_csv
 from mylib.consts import bcolors, errors
 from os import path
 import pandas as pd
+import numpy as np
 import sys
 
 
@@ -77,8 +78,16 @@ def     logreg_train():
         filename,
         [1, 8, 9, 10, 11, 12, 13, 17, 18]
     )
-    # The X (features) Matrice [m x 8]
-    X = df.iloc[:, 1:]
+    # The X (features) Matrice [m x 9]
+    # (remove the index column and add X0 column full of 1):
+    X = np.concatenate(
+        (
+            np.ones(df.shape[0], 1),
+            df['Index'],
+        ),
+        # concat in columns
+        axis=1
+    )
     # The Y (labels) Vector [m x 1]
     Y = df['Hogwarts House']
     print('-------------------  X  ---------------------')

@@ -10,6 +10,7 @@
 #                                                                              #
 # **************************************************************************** #
 
+from re import match
 import numpy as np
 
 def     sigmoid(z):
@@ -17,6 +18,44 @@ def     sigmoid(z):
     Sigmoid fonction
     '''
     return 1 / (1 + np.exp(z))
+
+
+def     ft_sum(array):
+    '''
+    Sum all nbrs in an array
+    '''
+    sum = 0
+    for i in array:
+        sum += i
+    return sum
+
+
+def     ft_arrayPower(array, n):
+    '''
+    Apply the power to the array
+    '''
+    for i in len(array):
+        array[i] = array[i] ** n
+    return array
+
+
+def     ft_arraySquare(array):
+    '''
+    Apply the power to the array
+    '''
+    for i in range(len(array)):
+        array[i] = array[i] ** 2
+    return array
+
+
+def     ft_isFloat(value):
+    '''
+    Check if the string is a float
+    '''
+    if value and match(r'^[0-9]+(\.[0-9]+)?$', value):
+        return True
+    return False
+
 
 
 def     ft_isNaN(nbr):

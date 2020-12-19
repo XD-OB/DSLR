@@ -40,12 +40,12 @@ def     prediction(weights, X):
     prediction = []
     for i in range(X.shape[0]):
         prediction.append(
-            np.argmax(predict_matrice[i])
+            houses[np.argmax(predict_matrice[i])]
         )
     return prediction
 
 
-def     exit_usage(filename, error):
+def     exit_usage(error, filename="file"):
     '''
     Print the error Msg and Exit 
     '''
@@ -72,9 +72,9 @@ def     check_csvFile(filename):
     Check if the filename is a valid CSV file
     '''
     if not path.exists(filename):
-        exit_usage(filename, errors.NOT_FILE)
+        exit_usage(errors.NOT_FILE, filename)
     if not filename.endswith('.csv'):
-        exit_usage(filename, errors.NOT_CSV)
+        exit_usage(errors.NOT_CSV, filename)
 
 
 def     logreg_predict():
@@ -99,7 +99,7 @@ def     logreg_predict():
     )
     # Check Dimensions of the weights file
     if weights.shape[0] != 9 or weights.shape[1] != 4:
-        exit_usage(errors.WEITGHS_SHAPE)
+        exit_usage(errors.WEIGHTS_DIM)
     # Build X Matrice
     # (remove the index column and add X0 column full of 1):
     X = np.concatenate(
@@ -110,9 +110,17 @@ def     logreg_predict():
         # concat in columns
         axis=1
     )
-    # Predict Houses:
-    predict_houses = prediction(weights, X)
-    print(predict_houses)
+    # Predict DF:
+    predict_df = pd.DataFrame(
+        prediction(weights, X),
+        index=list(testSet['Index']),
+        columns=['Hogwarts House']
+    )
+    # Write the result in a csv file:
+    predict_df.to_csv(
+        'houses.csv',
+         index_label= 'Index',
+    )
 
 
 # Launch the predict program
