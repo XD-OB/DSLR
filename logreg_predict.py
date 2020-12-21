@@ -31,12 +31,12 @@ def     h(Theta, X):
     return sigmoid(X.dot(Theta))
 
 
-def     prediction(weights, X):
+def     prediction(Theta, X):
     '''
     Return a vector of Predicted Houses
     '''
     # Prediction Matrice:
-    predict_matrice = h(weights, X)
+    predict_matrice = h(Theta, X)
     # Get the max column index of each row
     prediction = []
     for i in range(X.shape[0]):

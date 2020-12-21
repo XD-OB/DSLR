@@ -25,6 +25,7 @@
 ################################################################################
 
 from src.standarize import standarize_X
+from src.precision import print_precision
 from mylib.csvTools import get_df_from_csv
 from mylib.consts import bcolors, errors
 from mylib.math import sigmoid
@@ -111,10 +112,6 @@ def     gradient_descent(X, Y):
     # Rehape theta to a simple vector before return it
     theta = np.reshape(theta, (9,))
     return theta
-
-
-def     print_precision(Theta, X, Y):
-    print('precision')
 
 
 def     logreg_train():
