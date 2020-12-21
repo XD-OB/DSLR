@@ -144,5 +144,11 @@ def     print_precision(Theta, X, labels):
     # Accuracy:
     accuracy = calcul_accuracy(labels, labels_pred)
     print('\nPrecision of the algorithm:')
+    print(f'Accuracy : {accuracy}')
+    print('-----------------------------')
     print(CM)
-    print(f'Accuracy: {accuracy}')
+    print('-----------------------------')
+    print(f'Precision: {precision}')
+    print(f'Recall   : {recall}')
+    print(f'F1 score : {F1}')
+    print(f'Balanced Accuracy: {F1}')
