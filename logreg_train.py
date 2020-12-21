@@ -24,13 +24,33 @@
 #                                                                              #
 ################################################################################
 
+from src.standarize import standarize_X
 from mylib.csvTools import get_df_from_csv
 from mylib.consts import bcolors, errors
-from src.standarize import standarize_X
+from mylib.math import sigmoid
 from os import path
 import pandas as pd
 import numpy as np
 import sys
+
+# Max Iteration Macro:
+MAX_ITER = 1000
+
+# Global Variables:
+algo = 'BGD'
+
+
+def     print_loading():
+    '''
+    Print The Loading Message depend on the Algo type
+    '''
+    print('\nTraining using ', end='')
+    if algo == 'SGD':
+        print('Stochastic Gradient Descent Algorithm ....\n')
+    elif algo == 'LS':
+        print('Least Squares Algorithm ....\n')
+    else:
+        print('Batch Gradient Descent Algorithm ....\n')
 
 
 def     exit_usage(error):
@@ -73,8 +93,28 @@ def     get_Y(labels, house):
     '''
     Create the One vs All Ys
     '''
-    Y = np.array([int(y == house) for y in labels])
+    Y = np.array([int(y == house) for y in labels], ndmin=2)
     return np.transpose(Y)
+
+
+def     gradient_descent(X, Y):
+    '''
+    Apply The Gradient descent 
+    '''
+    # Learning Rate
+    alpha = 0.1
+    # Init Theta
+    theta = np.zeros((9,1))
+    # Launch the Gradient Algorithm
+    for _ in range(MAX_ITER):
+        theta -= (alpha / Y.shape[0]) * np.transpose(X).dot(sigmoid(X.dot(theta)) - Y)
+    # Rehape theta to a simple vector before return it
+    theta = np.reshape(theta, (9,))
+    return theta
+
+
+def     print_precision(Theta, X, Y):
+    print('precision')
 
 
 def     logreg_train():
@@ -87,6 +127,8 @@ def     logreg_train():
         filename,
         [1, 8, 9, 10, 11, 12, 13, 17, 18]
     )
+    # Print Loading:
+    print_loading()
     # The X (features) Matrice [m x 9]
     # (remove the index column and add X0 column full of 1):
     X = np.concatenate(
@@ -98,17 +140,24 @@ def     logreg_train():
         axis=1
     )
     # The Y (labels) Vector [m x 1]
-    labels = trainSet['Hogwarts House']
-    # Dictionary of Y for each House classificator
-    Y = {
-        'G': get_Y(labels, 'Gryffindor'),
-        'R': get_Y(labels, 'Ravenclaw'),
-        'H': get_Y(labels, 'Hufflepuff'),
-        'S': get_Y(labels, 'Slytherin'),
+    Y = trainSet['Hogwarts House']
+    # Get Theta from Gradient Descent:
+    result_dict = {
+        'G': gradient_descent(X, get_Y(Y, 'Gryffindor')),
+        'R': gradient_descent(X, get_Y(Y, 'Ravenclaw')),
+        'H': gradient_descent(X, get_Y(Y, 'Hufflepuff')),
+        'S': gradient_descent(X, get_Y(Y, 'Slytherin')),
     }
-    # print(f'-------------------  X  ---------------------\n{X}')
-    # print(f'-------------------  Y  ---------------------\n{Y}')
-    #print(Y)
+    Theta = pd.DataFrame(result_dict)
+    # Print Weights in a file:
+    Theta.to_csv(
+        'weights.csv',
+        index=False,
+        sep='\t',
+    )
+    # Print Precision:
+    print('Training DONE ✅\n')
+    print_precision(Theta, X, Y)
 
 
 # Launch the Logistic Regression training:
