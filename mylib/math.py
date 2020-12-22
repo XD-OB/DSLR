@@ -6,7 +6,7 @@
 #    By: obelouch <obelouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/25 12:26:44 by obelouch          #+#    #+#              #
-#    Updated: 2020/12/19 04:21:20 by obelouch         ###   ########.fr        #
+#    Updated: 2020/12/22 23:26:56 by obelouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ def     sigmoid(z):
     '''
     Sigmoid fonction
     '''
-    return 1 / (1 + np.exp(z))
+    return 1 / (1 + np.exp(-z))
 
 
 def     ft_sum(array):

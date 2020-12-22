@@ -6,7 +6,7 @@
 #    By: obelouch <obelouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/21 17:41:37 by obelouch          #+#    #+#              #
-#    Updated: 2020/12/21 17:41:37 by obelouch         ###   ########.fr        #
+#    Updated: 2020/12/23 00:15:03 by obelouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,9 @@
 #                                                                              #
 ################################################################################
 
+from sklearn.metrics import accuracy_score
 from mylib.math import ft_sum, sigmoid
+from mylib.consts import bcolors
 import numpy as np
 
 
@@ -114,10 +116,10 @@ def     calcul_confusionDict(Y, Y_pred):
 
 def     calcul_accuracy(Y, Y_pred):
     '''
-    Calculate Accuracy of the Algorithm
+    Calculate Accuracy in percent of the Algorithm
     '''
     accuracy = ft_sum([int(y == y_pred) for y, y_pred in zip(Y, Y_pred)]) / len(Y)
-    return accuracy
+    return accuracy * 100
 
 
 def     print_precision(Theta, X, labels):
@@ -143,12 +145,18 @@ def     print_precision(Theta, X, labels):
     balancedAccuracy = (recall + (CM['TN'] / (CM['TN'] + CM['FP']))) / 2
     # Accuracy:
     accuracy = calcul_accuracy(labels, labels_pred)
-    print('\nPrecision of the algorithm:')
-    print(f'Accuracy : {accuracy}')
-    print('-----------------------------')
-    print(CM)
-    print('-----------------------------')
-    print(f'Precision: {precision}')
-    print(f'Recall   : {recall}')
-    print(f'F1 score : {F1}')
-    print(f'Balanced Accuracy: {F1}')
+    print('\n%s~~~~~~~~ Precision of the algorithm ~~~~~~~~%s\n' % (bcolors.OKCYAN, bcolors.ENDC))
+    print('* Accuracy : %s%.2f%%%s\n' % (bcolors.OKGREEN, accuracy, bcolors.ENDC))
+    #print('* Scikit Accuracy : %s%.2f%%%s\n' % (bcolors.WARNING, (accuracy_score(labels, labels_pred) * 100), bcolors.ENDC))
+    print('--------- Confusion Matrix ------------')
+    print('|  True Positive  |  False Positive   |')
+    print('|  %s%-14d%s |  %s%-15d%s  |' % (bcolors.OKGREEN, CM['TP'], bcolors.ENDC, bcolors.FAIL, CM['FP'], bcolors.ENDC))
+    print('| ----------------------------------- |')
+    print('|  %s%-14d%s |  %s%-15d%s  |' % (bcolors.FAIL, CM['FN'], bcolors.ENDC, bcolors.OKGREEN, CM['TN'], bcolors.ENDC))
+    print('|  False Negative |  True Negative    |')
+    print('---------------------------------------\n')
+    print('* Precision: %s%.2f%%%s' % (bcolors.OKGREEN, (precision * 100), bcolors.ENDC))
+    print('* Recall   : %s%.2f%%%s' % (bcolors.OKGREEN, (recall * 100), bcolors.ENDC))
+    print('* F1 score : %s%.2f%%%s' % (bcolors.OKGREEN, (F1 * 100), bcolors.ENDC))
+    print('* Balanced Accuracy: %s%.2f%%%s' % (bcolors.OKGREEN, (balancedAccuracy * 100), bcolors.ENDC))
+    print('\n%s~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%s' % (bcolors.OKCYAN, bcolors.ENDC))

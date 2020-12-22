@@ -6,7 +6,7 @@
 #    By: obelouch <obelouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/18 18:36:47 by obelouch          #+#    #+#              #
-#    Updated: 2020/12/19 00:50:31 by obelouch         ###   ########.fr        #
+#    Updated: 2020/12/22 23:33:53 by obelouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,7 @@ import numpy as np
 import sys
 
 # Max Iteration Macro:
-MAX_ITER = 1000
+MAX_ITER = 10000
 
 # Global Variables:
 algo = 'BGD'
@@ -103,12 +103,12 @@ def     gradient_descent(X, Y):
     Apply The Gradient descent 
     '''
     # Learning Rate
-    alpha = 0.1
+    alpha = 0.5
     # Init Theta
-    theta = np.zeros((9,1))
+    theta = np.zeros((9, 1))
     # Launch the Gradient Algorithm
     for _ in range(MAX_ITER):
-        theta -= (alpha / Y.shape[0]) * np.transpose(X).dot(sigmoid(X.dot(theta)) - Y)
+        theta -= alpha * np.transpose(X).dot(sigmoid(X.dot(theta)) - Y) / Y.shape[0]
     # Rehape theta to a simple vector before return it
     theta = np.reshape(theta, (9,))
     return theta
@@ -139,18 +139,17 @@ def     logreg_train():
     # The Y (labels) Vector [m x 1]
     Y = trainSet['Hogwarts House']
     # Get Theta from Gradient Descent:
-    result_dict = {
+    Theta = pd.DataFrame({
         'G': gradient_descent(X, get_Y(Y, 'Gryffindor')),
         'R': gradient_descent(X, get_Y(Y, 'Ravenclaw')),
         'H': gradient_descent(X, get_Y(Y, 'Hufflepuff')),
         'S': gradient_descent(X, get_Y(Y, 'Slytherin')),
-    }
-    Theta = pd.DataFrame(result_dict)
+    })
     # Print Weights in a file:
     Theta.to_csv(
         'weights.csv',
         index=False,
-        sep='\t',
+        sep=',',
     )
     # Print Precision:
     print('Training DONE ✅\n')
