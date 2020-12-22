@@ -6,7 +6,7 @@
 #    By: obelouch <obelouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/18 18:36:47 by obelouch          #+#    #+#              #
-#    Updated: 2020/12/22 23:33:53 by obelouch         ###   ########.fr        #
+#    Updated: 2020/12/23 00:31:52 by obelouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,13 +45,14 @@ def     print_loading():
     '''
     Print The Loading Message depend on the Algo type
     '''
-    print('\nTraining using ', end='')
+    print(f'\nTraining using {bcolors.BOLD}', end='')
     if algo == 'SGD':
-        print('Stochastic Gradient Descent Algorithm ....\n')
+        print('Stochastic Gradient Descent', end='')
     elif algo == 'LS':
-        print('Least Squares Algorithm ....\n')
+        print('Least Squares', end='')
     else:
-        print('Batch Gradient Descent Algorithm ....\n')
+        print('Batch Gradient Descent', end='')
+    print(f'{bcolors.ENDC} Algorithm ....\n')
 
 
 def     exit_usage(error):
@@ -152,7 +153,7 @@ def     logreg_train():
         sep=',',
     )
     # Print Precision:
-    print('Training DONE ✅\n')
+    print(f'{bcolors.OKGREEN}Training DONE{bcolors.ENDC} ✅\n')
     print_precision(Theta, X, Y)
 
 

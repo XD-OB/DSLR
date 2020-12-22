@@ -6,7 +6,7 @@
 #    By: obelouch <obelouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/21 17:41:37 by obelouch          #+#    #+#              #
-#    Updated: 2020/12/23 00:15:03 by obelouch         ###   ########.fr        #
+#    Updated: 2020/12/23 00:31:11 by obelouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -146,7 +146,7 @@ def     print_precision(Theta, X, labels):
     # Accuracy:
     accuracy = calcul_accuracy(labels, labels_pred)
     print('\n%s~~~~~~~~ Precision of the algorithm ~~~~~~~~%s\n' % (bcolors.OKCYAN, bcolors.ENDC))
-    print('* Accuracy : %s%.2f%%%s\n' % (bcolors.OKGREEN, accuracy, bcolors.ENDC))
+    print('%s*%s Accuracy : %s%.2f%%%s\n' % (bcolors.OKBLUE, bcolors.ENDC, bcolors.OKGREEN, accuracy, bcolors.ENDC))
     #print('* Scikit Accuracy : %s%.2f%%%s\n' % (bcolors.WARNING, (accuracy_score(labels, labels_pred) * 100), bcolors.ENDC))
     print('--------- Confusion Matrix ------------')
     print('|  True Positive  |  False Positive   |')
@@ -155,8 +155,8 @@ def     print_precision(Theta, X, labels):
     print('|  %s%-14d%s |  %s%-15d%s  |' % (bcolors.FAIL, CM['FN'], bcolors.ENDC, bcolors.OKGREEN, CM['TN'], bcolors.ENDC))
     print('|  False Negative |  True Negative    |')
     print('---------------------------------------\n')
-    print('* Precision: %s%.2f%%%s' % (bcolors.OKGREEN, (precision * 100), bcolors.ENDC))
-    print('* Recall   : %s%.2f%%%s' % (bcolors.OKGREEN, (recall * 100), bcolors.ENDC))
-    print('* F1 score : %s%.2f%%%s' % (bcolors.OKGREEN, (F1 * 100), bcolors.ENDC))
-    print('* Balanced Accuracy: %s%.2f%%%s' % (bcolors.OKGREEN, (balancedAccuracy * 100), bcolors.ENDC))
+    print('%s*%s Precision: %s%.2f%%%s' % (bcolors.OKBLUE, bcolors.ENDC, bcolors.OKGREEN, (precision * 100), bcolors.ENDC))
+    print('%s*%s Recall   : %s%.2f%%%s' % (bcolors.OKBLUE, bcolors.ENDC, bcolors.OKGREEN, (recall * 100), bcolors.ENDC))
+    print('%s*%s F1 score : %s%.2f%%%s' % (bcolors.OKBLUE, bcolors.ENDC, bcolors.OKGREEN, (F1 * 100), bcolors.ENDC))
+    print('%s*%s Balanced Accuracy: %s%.2f%%%s' % (bcolors.OKBLUE, bcolors.ENDC, bcolors.OKGREEN, (balancedAccuracy * 100), bcolors.ENDC))
     print('\n%s~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%s' % (bcolors.OKCYAN, bcolors.ENDC))
