@@ -29,7 +29,7 @@ from src.precision import print_precision
 from mylib.csvTools import get_df_from_csv
 from mylib.consts import bcolors, errors
 from mylib.libft import get_flags_and_args
-from src.algorithms import bgd, sgd
+from src.algorithms import get_theta
 from src.prediction import get_Y
 from os import path
 import pandas as pd
@@ -65,7 +65,7 @@ def     exit_usage(error):
         print('File not found!')
     elif error == errors.NOT_CSV:
         print('Wrong file extension, accept only CSV!')
-    elif error == errors.MUCH_FLAG:
+    elif error == errors.FLAG_NBR:
         print('Too much options used!')
     elif error == errors.WRONG_FLAG:
         print('Wrong option used!')
@@ -100,35 +100,12 @@ def     set_algorithm(flags):
     '''
     global  algo
     if len(flags) > 1:
-        exit_usage(errors.MUCH_FLAG)
+        exit_usage(errors.FLAG_NBR)
     if len(flags) == 1:
         option = flags[0]
         if option not in ['BGD', 'SGD']:
             exit_usage(errors.WRONG_FLAG)
         algo = option
-
-
-def     get_theta(X, Y):
-    '''
-    Get Theta depend on selected Algorithm
-    '''
-    if algo == 'SGD':
-        # Get Theta from Stochastic Gradient Descent:
-        Theta = pd.DataFrame({
-            'G': sgd(X, get_Y(Y, 'Gryffindor')),
-            'R': sgd(X, get_Y(Y, 'Ravenclaw')),
-            'H': sgd(X, get_Y(Y, 'Hufflepuff')),
-            'S': sgd(X, get_Y(Y, 'Slytherin')),
-        })
-    else:
-        # Get Theta from Batch Gradient Descent:
-        Theta = pd.DataFrame({
-            'G': bgd(X, get_Y(Y, 'Gryffindor')),
-            'R': bgd(X, get_Y(Y, 'Ravenclaw')),
-            'H': bgd(X, get_Y(Y, 'Hufflepuff')),
-            'S': bgd(X, get_Y(Y, 'Slytherin')),
-        })
-    return Theta
 
 
 def     logreg_train():
@@ -160,7 +137,7 @@ def     logreg_train():
     # The Y (labels) Vector [m x 1]
     Y = trainSet['Hogwarts House']
     # Get Theta depend on selected algorithm
-    Theta = get_theta(X, Y)
+    Theta = get_theta(X, Y, algo)
     # Print Weights in a file:
     Theta.to_csv(
         'weights.csv',

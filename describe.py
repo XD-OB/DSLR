@@ -10,14 +10,31 @@
 #                                                                              #
 # **************************************************************************** #
 
-
-from src.print_description import exit_usage, print_describe
-from src.description import get_description
-from mylib.math import ft_isNaN, ft_percentile
-from mylib.consts import errors
+from src.description import get_description, print_describe
+from mylib.csvTools import get_df_from_csv
+from mylib.consts import bcolors, errors
 from os import path
-import pandas as pd
 import sys
+
+
+def     exit_usage(error):
+    '''
+    Print the error Msg and Exit 
+    '''
+    print(f'\n{bcolors.FAIL}Error{bcolors.ENDC}: ', end='')
+    if error == errors.ARG_NBR:
+        print('Wrong number of arguments!')
+    elif error == errors.NO_ARG:
+        print('No file is provided!')
+    elif error == errors.NOT_FILE:
+        print('File not found!')
+    elif error == errors.NOT_CSV:
+        print('Wrong file extension, accept only CSV!')
+    else:
+        print('Can\'t read the file!')
+    print(f'{bcolors.WARNING}Usage{bcolors.ENDC}: ', end='')
+    print('python3 describe.py <_dataset.csv_>')
+    exit(1)
 
 
 def     get_filename():
@@ -36,36 +53,18 @@ def     get_filename():
     return filename
 
 
-def     get_df_from_csv(csvFile):
-    '''
-    Read the CSV & transform it to DataFrame 
-    '''
-    try:
-        df = pd.read_csv(
-                csvFile,
-                # Columns to include
-                usecols=[6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]
-            )
-    except:
-        print('Can\'t transform the CSV into dataframe!')
-        exit(1)
-    return df
-
-
 def     describe():
     '''
     The Describe Program
     '''
     csvFile = get_filename()
-    df = get_df_from_csv(csvFile)
+    df = get_df_from_csv(
+        csvFile,
+        usecols=[6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18],
+    )
     description = get_description(df)
-    # print(df)
-    # print('------ description  --------')
-    # print(description)
-    # print('------ sys describe --------')
-    # print(df.describe())
-    # print('------  description --------')
     print_describe(description)
+
 
 # Launch the program
 describe()

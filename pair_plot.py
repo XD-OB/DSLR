@@ -10,15 +10,30 @@
 #                                                                              #
 # **************************************************************************** #
 
+from mylib.consts import bcolors
 import matplotlib.pyplot as plt
 import seaborn as sns
 import pandas as pd
+import sys
+
+
+def     exit_usage():
+    '''
+    Print the error Msg and Exit 
+    '''
+    print(f'\n{bcolors.FAIL}Error{bcolors.ENDC}: ', end='')
+    print('Wrong number of arguments!')
+    print(f'\n{bcolors.WARNING}Usage{bcolors.ENDC}: ', end='')
+    print('python3 pair_plot.py')
+    exit(1)
 
 
 def     pair_plot():
     '''
      Displays a pair plot
     '''
+    if len(sys.argv) > 1:
+        exit_usage()
     # Read dataframe from the CSV file
     df = pd.read_csv(
         'ressources/dataset_train.csv',

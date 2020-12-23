@@ -43,8 +43,7 @@ def     display_scatter_2f(df_houses, f1, f2):
     figure = plt.figure(figsize=(10,8))
     # Set Window Title
     figure.canvas.set_window_title(f'Scatter of the courses  " {course1} " and " {course2} "')
-    ### Ravenclaw Scatter
-    # Courses Clean Dictionary
+    ###### Ravenclaw Scatter
     courses = get_house_courses(df_houses, 'R', course1, course2)
     plt.scatter(
         courses[course1],
@@ -53,8 +52,7 @@ def     display_scatter_2f(df_houses, f1, f2):
         color='#0000FF',
         label='Ravenclaw',
     )
-    # ### Hufflepuff Scatter
-    # Courses Clean Dictionary
+    ###### Hufflepuff Scatter
     courses = get_house_courses(df_houses, 'H', course1, course2)
     plt.scatter(
         courses[course1],
@@ -63,8 +61,7 @@ def     display_scatter_2f(df_houses, f1, f2):
         color='#CCCC00',
         label='Hufflepuff',
     )
-    ### Gryffindor Scatter
-    # Courses Clean Dictionary
+    ###### Gryffindor Scatter
     courses = get_house_courses(df_houses, 'G', course1, course2)
     plt.scatter(
         courses[course1],
@@ -73,8 +70,7 @@ def     display_scatter_2f(df_houses, f1, f2):
         color='#FF0000',
         label='Gryffindor',
     )
-    ### Slytherin Scatter
-    # Courses Array
+    ###### Slytherin Scatter
     courses = get_house_courses(df_houses, 'S', course1, course2)
     plt.scatter(
         courses[course1],
@@ -83,9 +79,9 @@ def     display_scatter_2f(df_houses, f1, f2):
         color='#00FF00',
         label='Slytherin',
     )
-    #########
+    ############################
     plt.title(f'Scatter "{course1}" with "{course2}"')
-    plt.legend(loc='upper left')
+    plt.legend(loc='upper right')
     plt.ylabel(course2)
     plt.xlabel(course1)
     # Adds major gridlines

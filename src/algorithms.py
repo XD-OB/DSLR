@@ -53,3 +53,26 @@ def     sgd(X, Y):
     # Rehape theta to a simple vector before return it
     theta = np.reshape(theta, (9,))
     return theta
+
+
+def     get_theta(X, Y, algo):
+    '''
+    Get Theta depend on selected Algorithm
+    '''
+    if algo == 'SGD':
+        # Get Theta from Stochastic Gradient Descent:
+        Theta = pd.DataFrame({
+            'G': sgd(X, get_Y(Y, 'Gryffindor')),
+            'R': sgd(X, get_Y(Y, 'Ravenclaw')),
+            'H': sgd(X, get_Y(Y, 'Hufflepuff')),
+            'S': sgd(X, get_Y(Y, 'Slytherin')),
+        })
+    else:
+        # Get Theta from Batch Gradient Descent:
+        Theta = pd.DataFrame({
+            'G': bgd(X, get_Y(Y, 'Gryffindor')),
+            'R': bgd(X, get_Y(Y, 'Ravenclaw')),
+            'H': bgd(X, get_Y(Y, 'Hufflepuff')),
+            'S': bgd(X, get_Y(Y, 'Slytherin')),
+        })
+    return Theta

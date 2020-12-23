@@ -9,7 +9,6 @@
 #    Updated: 2020/12/15 02:45:03 by obelouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
-#!/usr/bin/env python3
 
 import pandas as pd
 from os.path import isfile

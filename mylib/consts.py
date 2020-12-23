@@ -31,9 +31,14 @@ class   errors:
     '''
     # Errors Macros
     NO_ARG = 1
-    ARG_NBR = 2
-    NOT_CSV = 3
-    NOT_FILE = 4
-    MUCH_FLAG = 5
-    WRONG_FLAG = 6
-    WEIGHTS_DIM = 7
+    SYNTAX = 2
+    FLAG_1 = 3
+    FLAG_2 = 4
+    ARG_NBR = 5
+    NOT_CSV = 6
+    FLAG_NBR = 7
+    EQU_FTRS = 8
+    OUT_FTRS = 9
+    NOT_FILE = 10
+    WRONG_FLAG = 11
+    WEIGHTS_DIM = 12

@@ -39,6 +39,7 @@ def     check_csvFile(filename):
     Check if the filename is a valid CSV file
     '''
     if not path.exists(filename):
-        exit_usage(errors.NOT_FILE, filename)
+        return 1
     if not filename.endswith('.csv'):
-        exit_usage(errors.NOT_CSV, filename)
+        return 2
+    return 0

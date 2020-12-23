@@ -13,9 +13,9 @@
 from mylib.csvTools import get_df_from_csv, check_csvFile
 from mylib.libft import get_flags_and_args
 from mylib.consts import bcolors, errors
+from src.print_predict import show_result
 from src.standarize import standarize_X
 from src.prediction import prediction
-from mylib.math import ft_max
 from os import path
 import pandas as pd
 import numpy as np
@@ -50,55 +50,6 @@ def     exit_usage(error, filename="file"):
     exit(1)
 
 
-def     show_result(predict_df):
-    '''
-    Show the result in a CSV file or in the terminal based on the flag
-    '''
-    if is_print == True:
-        # Show the result
-        ## Gryffindor:
-        print(f'{bcolors.FAIL}------------------------------{bcolors.ENDC}')
-        count = 0
-        for student in predict_df.loc[predict_df['Hogwarts House'] == 'Gryffindor'].itertuples():
-            print('%-4d: %s %s' % (student[0], student[2], student[3]))
-            count += 1
-        print(f'{bcolors.FAIL}--------- Gryffindor [{count}] ---------{bcolors.ENDC}\n')
-        ## Hufflepuff:
-        print(f'{bcolors.WARNING}-------------------------------------{bcolors.ENDC}')
-        count = 0
-        for student in predict_df.loc[predict_df['Hogwarts House'] == 'Hufflepuff'].itertuples():
-            print('%-4d: %s %s' % (student[0], student[2], student[3]))
-            count += 1
-        print(f'{bcolors.WARNING}--------- Hufflepuff [{count}] ---------{bcolors.ENDC}\n')
-        ## Ravenclaw
-        print(f'{bcolors.OKBLUE}------------------------------------{bcolors.ENDC}')
-        count = 0
-        for student in predict_df.loc[predict_df['Hogwarts House'] == 'Ravenclaw'].itertuples():
-            print('%-4d: %s %s' % (student[0], student[2], student[3]))
-            count += 1
-        print(f'{bcolors.OKBLUE}--------- Ravenclaw [{count}] ---------{bcolors.ENDC}\n')
-        ## Slytherin
-        print(f'{bcolors.OKGREEN}-----------------------------------{bcolors.ENDC}')
-        count = 0
-        for student in predict_df.loc[predict_df['Hogwarts House'] == 'Slytherin'].itertuples():
-            print('%-4d: %s %s' % (student[0], student[2], student[3]))
-            count += 1
-        print(f'{bcolors.OKGREEN}---------- Slytherin [{count}] ---------{bcolors.ENDC}\n')
-    else:
-        try:
-            # Write the result in a csv file:
-            predict_df.to_csv(
-                'houses.csv',
-                index_label= 'Index',
-                columns=['Hogwarts House']
-            )
-            # Print Finish message:
-            print('\n%sSuccess:%s ' % (bcolors.OKGREEN, bcolors.ENDC) , end='')
-            print('The prediction result is stored in %shouses.csv%s' % (bcolors.OKCYAN, bcolors.ENDC))
-        except:
-            print('\n%sFail:%s The prediction result is not stored!' % (bcolors.FAIL, bcolors.ENDC))
-
-
 def     get_fileNames(args):
     '''
     Check & Get the files names from args
@@ -106,8 +57,17 @@ def     get_fileNames(args):
     if len(args) != 2:
         exit_usage(errors.ARG_NBR)
     # Check the CSV files
-    check_csvFile(args[0])
-    check_csvFile(args[1])
+    ##### File 1:
+    if not path.exists(args[0]):
+        exit_usage(errors.NOT_FILE, args[0])
+    if not args[0].endswith('.csv'):
+        exit_usage(errors.NOT_CSV, args[0])
+    ##### File 2:
+    if not path.exists(args[1]):
+        exit_usage(errors.NOT_FILE, args[1])
+    if not args[0].endswith('.csv'):
+        exit_usage(errors.NOT_CSV, args[1])
+    # Return files names
     return [
         args[0],
         args[1],
@@ -120,7 +80,7 @@ def     set_print(flags):
     '''
     global  is_print
     if len(flags) > 1:
-        exit_usage(errors.MUCH_FLAG)
+        exit_usage(errors.FLAG_NBR)
     if len(flags) == 1:
         if flags[0] != 'p':
             exit_usage(errors.WRONG_FLAG)
@@ -149,8 +109,7 @@ def     logreg_predict():
     # Check Dimensions of the weights file
     if weights.shape != (9, 4):
         exit_usage(errors.WEIGHTS_DIM)
-    # Build X Matrice
-    # (remove the index column and add X0 column full of 1):
+    # Build X Matrice (remove the index column and add X0 column full of 1):
     X = np.concatenate(
         (
             np.ones((testSet.shape[0], 1)),
@@ -170,7 +129,7 @@ def     logreg_predict():
         index=list(testSet['Index']),
     )
     # Show the result
-    show_result(predict_df)
+    show_result(predict_df, is_print)
 
 
 # Launch the predict program
