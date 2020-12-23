@@ -34,4 +34,6 @@ class   errors:
     ARG_NBR = 2
     NOT_CSV = 3
     NOT_FILE = 4
-    WEIGHTS_DIM = 4
+    MUCH_FLAG = 5
+    WRONG_FLAG = 6
+    WEIGHTS_DIM = 7

@@ -11,8 +11,8 @@
 # **************************************************************************** #
 
 
-from visualizations.get_df_houses import get_df_houses
-import visualizations.display_hist as dh
+from src.get_df_houses import get_df_houses
+import src.display_hist as dh
 import sys
 
 

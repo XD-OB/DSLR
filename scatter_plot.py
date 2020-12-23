@@ -10,8 +10,8 @@
 #                                                                              #
 # **************************************************************************** #
 
-from visualizations.display_scatter import display_scatter_2f
-from visualizations.get_df_houses import get_df_houses
+from src.display_scatter import display_scatter_2f
+from src.get_df_houses import get_df_houses
 import mylib.math as myMath
 import sys
 import re

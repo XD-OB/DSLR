@@ -11,9 +11,9 @@
 # **************************************************************************** #
 
 
-from describes.print import exit_usage, print_describe
+from src.print_description import exit_usage, print_describe
+from src.description import get_description
 from mylib.math import ft_isNaN, ft_percentile
-from describes.description import get_description
 from mylib.consts import errors
 from os import path
 import pandas as pd
