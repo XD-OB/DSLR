@@ -29,15 +29,12 @@ from src.precision import print_precision
 from mylib.csvTools import get_df_from_csv
 from mylib.consts import bcolors, errors
 from mylib.libft import get_flags_and_args
+from src.algorithms import bgd, sgd
 from src.prediction import get_Y
-from mylib.math import sigmoid
 from os import path
 import pandas as pd
 import numpy as np
 import sys
-
-# Max Iteration Macro:
-MAX_ITER = 10000
 
 # Global Variables:
 algo = 'BGD'
@@ -81,22 +78,6 @@ def     exit_usage(error):
     exit(1)
 
 
-def     gradient_descent(X, Y):
-    '''
-    Apply The Gradient descent 
-    '''
-    # Learning Rate
-    alpha = 0.5
-    # Init Theta
-    theta = np.zeros((9, 1))
-    # Launch the Gradient Algorithm
-    for _ in range(MAX_ITER):
-        theta -= alpha * np.transpose(X).dot(sigmoid(X.dot(theta)) - Y) / Y.shape[0]
-    # Rehape theta to a simple vector before return it
-    theta = np.reshape(theta, (9,))
-    return theta
-
-
 def     get_filename(args):
     '''
     Check & take the dataset file from the argument
@@ -127,6 +108,29 @@ def     set_algorithm(flags):
         algo = option
 
 
+def     get_theta(X, Y):
+    '''
+    Get Theta depend on selected Algorithm
+    '''
+    if algo == 'SGD':
+        # Get Theta from Stochastic Gradient Descent:
+        Theta = pd.DataFrame({
+            'G': sgd(X, get_Y(Y, 'Gryffindor')),
+            'R': sgd(X, get_Y(Y, 'Ravenclaw')),
+            'H': sgd(X, get_Y(Y, 'Hufflepuff')),
+            'S': sgd(X, get_Y(Y, 'Slytherin')),
+        })
+    else:
+        # Get Theta from Batch Gradient Descent:
+        Theta = pd.DataFrame({
+            'G': bgd(X, get_Y(Y, 'Gryffindor')),
+            'R': bgd(X, get_Y(Y, 'Ravenclaw')),
+            'H': bgd(X, get_Y(Y, 'Hufflepuff')),
+            'S': bgd(X, get_Y(Y, 'Slytherin')),
+        })
+    return Theta
+
+
 def     logreg_train():
     '''
     Train the logistic regression model with the dataset_train 
@@ -155,13 +159,8 @@ def     logreg_train():
     )
     # The Y (labels) Vector [m x 1]
     Y = trainSet['Hogwarts House']
-    # Get Theta from Gradient Descent:
-    Theta = pd.DataFrame({
-        'G': gradient_descent(X, get_Y(Y, 'Gryffindor')),
-        'R': gradient_descent(X, get_Y(Y, 'Ravenclaw')),
-        'H': gradient_descent(X, get_Y(Y, 'Hufflepuff')),
-        'S': gradient_descent(X, get_Y(Y, 'Slytherin')),
-    })
+    # Get Theta depend on selected algorithm
+    Theta = get_theta(X, Y)
     # Print Weights in a file:
     Theta.to_csv(
         'weights.csv',
