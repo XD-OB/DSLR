@@ -6,44 +6,19 @@
 #    By: obelouch <obelouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/19 00:05:48 by obelouch          #+#    #+#              #
-#    Updated: 2020/12/22 23:27:52 by obelouch         ###   ########.fr        #
+#    Updated: 2020/12/23 03:15:17 by obelouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-from mylib.csvTools import get_df_from_csv
+from mylib.csvTools import get_df_from_csv, check_csvFile
 from mylib.consts import bcolors, errors
-from mylib.math import sigmoid, ft_max
 from src.standarize import standarize_X
+from src.prediction import prediction
+from mylib.math import ft_max
 from os import path
 import pandas as pd
 import numpy as np
 import sys
-
-
-# Houses Names:
-houses = ['Gryffindor', 'Ravenclaw', 'Hufflepuff', 'Slytherin']
-
-
-def     h(Theta, X):
-    '''
-    Hypothesis finction
-    '''
-    return sigmoid(X.dot(Theta))
-
-
-def     prediction(Theta, X):
-    '''
-    Return a vector of Predicted Houses
-    '''
-    # Prediction Matrice:
-    predict_matrice = h(Theta, X)
-    # Get the max column index of each row
-    prediction = []
-    for i in range(X.shape[0]):
-        prediction.append(
-            houses[np.argmax(predict_matrice[i])]
-        )
-    return prediction
 
 
 def     exit_usage(error, filename="file"):
@@ -68,14 +43,46 @@ def     exit_usage(error, filename="file"):
     exit(1)
 
 
-def     check_csvFile(filename):
+def     show_result(predict_df):
     '''
-    Check if the filename is a valid CSV file
+    Show the result in a CSV file or in the terminal based on the flag
     '''
-    if not path.exists(filename):
-        exit_usage(errors.NOT_FILE, filename)
-    if not filename.endswith('.csv'):
-        exit_usage(errors.NOT_CSV, filename)
+    # Write the result in a csv file:
+    predict_df.to_csv(
+        'houses.csv',
+         index_label= 'Index',
+         columns=['Hogwarts House']
+    )
+    # Show the result
+    if is_print == True:
+        ## Gryffindor:
+        print(f'{bcolors.FAIL}------------------------------{bcolors.ENDC}\n')
+        count = 0
+        for student in predict_df.loc[predict_df['Hogwarts House'] == 'Gryffindor'].itertuples():
+            print('%-4d: %s %s' % (student[0], student[2], student[3]))
+            count += 1
+        print(f'{bcolors.FAIL}--------- Gryffindor [{count}] ---------{bcolors.ENDC}')
+        ## Hufflepuff:
+        print(f'{bcolors.WARNING}-------------------------------------{bcolors.ENDC}\n')
+        count = 0
+        for student in predict_df.loc[predict_df['Hogwarts House'] == 'Hufflepuff'].itertuples():
+            print('%-4d: %s %s' % (student[0], student[2], student[3]))
+            count += 1
+        print(f'{bcolors.WARNING}--------- Hufflepuff [{count}] ---------{bcolors.ENDC}')
+        ## Ravenclaw
+        print(f'{bcolors.OKBLUE}------------------------------------{bcolors.ENDC}\n')
+        count = 0
+        for student in predict_df.loc[predict_df['Hogwarts House'] == 'Ravenclaw'].itertuples():
+            print('%-4d: %s %s' % (student[0], student[2], student[3]))
+            count += 1
+        print(f'{bcolors.OKBLUE}--------- Ravenclaw [{count}] ---------{bcolors.ENDC}')
+        ## Slytherin
+        print(f'{bcolors.OKGREEN}-----------------------------------{bcolors.ENDC}\n')
+        count = 0
+        for student in predict_df.loc[predict_df['Hogwarts House'] == 'Slytherin'].itertuples():
+            print('%-4d: %s %s' % (student[0], student[2], student[3]))
+            count += 1
+        print(f'{bcolors.OKGREEN}---------- Slytherin [{count}] ---------{bcolors.ENDC}')
 
 
 def     logreg_predict():
@@ -93,7 +100,7 @@ def     logreg_predict():
     # take the dataframe from the files
     testSet = get_df_from_csv(
         file1_name,
-        [0, 8, 9, 10, 11, 12, 13, 17, 18]
+        [0, 2, 3, 8, 9, 10, 11, 12, 13, 17, 18]
     )
     weights = get_df_from_csv(
         file2_name,
@@ -106,22 +113,23 @@ def     logreg_predict():
     X = np.concatenate(
         (
             np.ones((testSet.shape[0], 1)),
-            standarize_X(testSet.iloc[:, 1:]),
+            standarize_X(testSet.iloc[:, 3:]),
         ),
         # concat in columns
         axis=1
     )
     # Predict DF:
+    dictio = {
+            'Hogwarts House': prediction(weights, X),
+            'First Name': testSet.loc[:, 'First Name'],
+            'Last Name': testSet.loc[:, 'Last Name'],
+        }
     predict_df = pd.DataFrame(
-        prediction(weights, X),
+        dictio,
         index=list(testSet['Index']),
-        columns=['Hogwarts House']
     )
-    # Write the result in a csv file:
-    predict_df.to_csv(
-        'houses.csv',
-         index_label= 'Index',
-    )
+    # Show the result
+    show_result(predict_df, True)
 
 
 # Launch the predict program

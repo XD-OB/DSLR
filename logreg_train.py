@@ -6,7 +6,7 @@
 #    By: obelouch <obelouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/18 18:36:47 by obelouch          #+#    #+#              #
-#    Updated: 2020/12/23 00:31:52 by obelouch         ###   ########.fr        #
+#    Updated: 2020/12/23 00:45:06 by obelouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,6 +28,7 @@ from src.standarize import standarize_X
 from src.precision import print_precision
 from mylib.csvTools import get_df_from_csv
 from mylib.consts import bcolors, errors
+from src.prediction import get_Y
 from mylib.math import sigmoid
 from os import path
 import pandas as pd
@@ -89,14 +90,6 @@ def     get_filename():
     if not filename.endswith('.csv'):
         exit_usage(errors.NOT_CSV)
     return filename
-
-
-def     get_Y(labels, house):
-    '''
-    Create the One vs All Ys
-    '''
-    Y = np.array([int(y == house) for y in labels], ndmin=2)
-    return np.transpose(Y)
 
 
 def     gradient_descent(X, Y):

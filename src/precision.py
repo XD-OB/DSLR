@@ -6,7 +6,7 @@
 #    By: obelouch <obelouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/21 17:41:37 by obelouch          #+#    #+#              #
-#    Updated: 2020/12/23 00:31:11 by obelouch         ###   ########.fr        #
+#    Updated: 2020/12/23 00:44:43 by obelouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,36 +19,12 @@
 #                                                                              #
 ################################################################################
 
+from src.prediction import prediction, get_dict_Y
 from sklearn.metrics import accuracy_score
-from mylib.math import ft_sum, sigmoid
 from mylib.consts import bcolors
+from mylib.math import ft_sum
 import numpy as np
 
-
-# Houses Names:
-houses = ['Gryffindor', 'Ravenclaw', 'Hufflepuff', 'Slytherin']
-
-
-def     h(Theta, X):
-    '''
-    Hypothesis finction
-    '''
-    return sigmoid(X.dot(Theta))
-
-
-def     prediction(Theta, X):
-    '''
-    Return a vector of Predicted Houses
-    '''
-    # Prediction Matrice:
-    predict_matrice = h(Theta, X)
-    # Get the max column index of each row
-    prediction = []
-    for i in range(X.shape[0]):
-        prediction.append(
-            houses[np.argmax(predict_matrice[i])]
-        )
-    return prediction
 
 def     calcul_TP(Y, Y_pred):
     '''
@@ -76,26 +52,6 @@ def     calcul_FN(Y, Y_pred):
     Calculate True Negative
     '''
     return ft_sum([int(y == 1 and y_pred == 0) for y, y_pred in zip(Y, Y_pred)])
-
-
-def     get_Y(labels, house):
-    '''
-    Create the One vs All Ys
-    '''
-    Y = np.array([int(y == house) for y in labels], ndmin=2)
-    return np.transpose(Y)
-
-def     get_dict_Y(labels):
-    '''
-    Take a predict houses labels and return a dictionary classify
-    for each house
-    '''
-    return {
-        'G': get_Y(labels, 'Gryffindor'),
-        'R': get_Y(labels, 'Ravenclaw'),
-        'H': get_Y(labels, 'Hufflepuff'),
-        'S': get_Y(labels, 'Slytherin'),
-    }
 
 
 def     calcul_confusionDict(Y, Y_pred):
