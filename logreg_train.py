@@ -30,9 +30,7 @@ from mylib.csvTools import get_df_from_csv
 from mylib.consts import bcolors, errors
 from mylib.libft import get_flags_and_args
 from src.algorithms import get_theta
-from src.prediction import get_Y
 from os import path
-import pandas as pd
 import numpy as np
 import sys
 

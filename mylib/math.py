@@ -20,6 +20,17 @@ def     sigmoid(z):
     return 1 / (1 + np.exp(-z))
 
 
+def     T(array):
+    '''
+    Transpose of an array:
+    '''
+    array_T = np.zeros((array.shape[::-1]), dtype=array.dtype)
+    for i in range(array.shape[1]):
+        for j in range(array.shape[0]):
+            array_T[i][j] = array[j][i]
+    return array_T
+
+
 def     ft_sum(array):
     '''
     Sum all nbrs in an array
@@ -34,9 +45,10 @@ def     ft_arrayPower(array, n):
     '''
     Apply the power to the array
     '''
+    new_array = array.copy()
     for i in len(array):
-        array[i] = array[i] ** n
-    return array
+        new_array[i] = new_array[i] ** n
+    return new_array
 
 
 def     ft_arraySquare(array):

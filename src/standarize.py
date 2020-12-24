@@ -10,7 +10,7 @@
 #                                                                              #
 # **************************************************************************** #
 
-from mylib.math import ft_standardized
+from mylib.math import ft_standardized, T
 import numpy as np
 
 def     standarize_X(df_matrice):
@@ -22,6 +22,4 @@ def     standarize_X(df_matrice):
         std_matrice.append(
             ft_standardized(df_matrice[col])
         )
-    return np.array(
-        np.transpose(std_matrice)
-    )
+    return T(np.array(std_matrice))

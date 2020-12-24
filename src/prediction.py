@@ -10,7 +10,7 @@
 #                                                                              #
 # **************************************************************************** #
 
-from mylib.math import sigmoid
+from mylib.math import sigmoid, T
 import numpy as np
 
 # Houses Names:
@@ -44,7 +44,7 @@ def     get_Y(labels, house):
     Create the One vs All Ys
     '''
     Y = np.array([int(y == house) for y in labels], ndmin=2)
-    return np.transpose(Y)
+    return T(Y)
 
 
 def     get_dict_Y(labels):

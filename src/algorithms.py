@@ -10,11 +10,13 @@
 #                                                                              #
 # **************************************************************************** #
 
-from mylib.math import sigmoid
+from src.prediction import get_Y
+from mylib.math import sigmoid, T
+import pandas as pd
 import numpy as np
 
 # Max Iteration Macro:
-MAX_ITER = 10000
+MAX_ITER = 100
 
 
 def     bgd(X, Y):
@@ -28,7 +30,7 @@ def     bgd(X, Y):
     # Launch the Gradient Algorithm
     for _ in range(MAX_ITER):
         h = sigmoid(X.dot(theta))
-        theta -= alpha * np.transpose(X).dot(h - Y) / Y.shape[0]
+        theta -= alpha * T(X).dot(h - Y) / Y.shape[0]
     # Rehape theta to a simple vector before return it
     theta = np.reshape(theta, (9,))
     return theta
