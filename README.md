@@ -1,7 +1,7 @@
 ## Harry Potter and a Data Scientist
 
 ### Subject PDF:
-[project_pdf!](https://github.com/XD-OB/DSLR/blob/master/ressources/en.subject.pdf)
+[project_pdf!](https://github.com/XD-OB/DSLR/blob/master/ressources/subject.en.pdf)
 
 ### Cook Book:
 [Cook_book!](https://github.com/XD-OB/DSLR/blob/master/ressources/nootboot.ipynb)
@@ -24,7 +24,7 @@ Which Hogwarts course has a homogeneous score distribution between all four hous
 - python3 histogram.py -d
 *   **-d**: Display all the histograms.
 
-![Screen Shot 1](https://github.com/XD-OB/DSLR/blob/master/ressources/hist.png)
+![Screen Shot 1](https://github.com/XD-OB/DSLR/blob/master/ressources/hist.JPG)
 
 ### Scatter plot
 What are the two features that are similar ?
@@ -34,13 +34,13 @@ What are the two features that are similar ?
 *   **-f2**: precise the second feature to use.
 *   **n1** and **n2**: index of the features to use
 
-![Screen Shot 2](https://github.com/XD-OB/DSLR/blob/master/ressources/scatter.png)
+![Screen Shot 2](https://github.com/XD-OB/DSLR/blob/master/ressources/scatter.JPG)
 
 ### Pair plot
 
 - python3 pair_plot.py
 
-![Screen Shot 3](https://github.com/XD-OB/DSLR/blob/master/ressources/pplot.png)
+![Screen Shot 3](https://github.com/XD-OB/DSLR/blob/master/ressources/pplot.JPG)
 
 ## Data Analysis:
 
@@ -70,7 +70,7 @@ In the end of the training the program output the: (using the training set)
 ## Predict with the model
 
 - python3 logreg_predict.py [-p] <_dataset_> <_weights_>
-*   **-p**: -p: Print the result with the students names in the stdout
+*   **-p**: Print the result with the students names in the stdout
 
 Output a file named: **./houses.csv** that contain the Indexs and the predicted house affected to the students.
 
@@ -79,7 +79,3 @@ Output a file named: **./houses.csv** that contain the Indexs and the predicted 
 - pip3 install pandas
 - pip3 install matplotlib
 - pip3 install seaborn
-
-## Owners
-### ** obelouch ** 1337
-### ** aelouarg ** 1337
