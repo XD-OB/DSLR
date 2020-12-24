@@ -76,7 +76,7 @@ def     set_courses(flags):
     except:
         exit_usage(errors.SYNTAX)
     # Test if the features numbers are in range:
-    if f1 > 13 or f2 > 13:
+    if f1 < 1 or f1 > 13 or f2 < 1 or f2 > 13:
         exit_usage(errors.OUT_FTRS)
     # Test if the features numbers are not identical:
     if f1 == f2:

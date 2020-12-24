@@ -21,8 +21,9 @@ You explain to him that in order for your "muggle" tools to work, you need stude
 ## Histogram
 Which Hogwarts course has a homogeneous score distribution between all four houses ?
 
-- python3 histogram.py -d
+### python3 histogram.py -d
 *   **-d**: Display all the histograms.
+*   **-f**: Show histogram of the feature 'n'.
 
 ![Screen Shot 1](https://github.com/XD-OB/DSLR/blob/master/ressources/hist.JPG)
 

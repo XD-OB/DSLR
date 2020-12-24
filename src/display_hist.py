@@ -13,7 +13,6 @@
 import matplotlib.pyplot as plt
 from numpy import isnan
 
-COURSE = 'Care of Magical Creatures'
 
 def     display_histograms(df_houses):
     '''
@@ -82,17 +81,18 @@ def     display_histograms(df_houses):
     plt.show()
 
 
-def     display_arithmancy_histogram(df_houses):
+def     display_histogram(df_houses, f):
     '''
-    Display the histogram of the course that have homogeneous score
-    distribution between all four houses
+    Display the histogram of the course selected by the user, or by default
+    the homogenous one (CMC)
     '''
+    course = df_houses['G'].columns[f]
     # Init Figure
     figure = plt.figure(figsize=(10,8))
     # Set Window Title
-    figure.canvas.set_window_title('Histogram of the course  " Care of Magical Creatures "')
+    figure.canvas.set_window_title(f'Histogram of the course  "{course}"')
     ### Ravenclaw Histogram
-    myarray = df_houses['R'].loc[:, COURSE]
+    myarray = df_houses['R'].loc[:, course]
     myarray = myarray[~isnan(myarray)]
     plt.hist(
         myarray,
@@ -102,7 +102,7 @@ def     display_arithmancy_histogram(df_houses):
         label='Ravenclaw',
     )
     ### Hufflepuff Histogram
-    myarray = df_houses['H'].loc[:, COURSE]
+    myarray = df_houses['H'].loc[:, course]
     myarray = myarray[~isnan(myarray)]
     plt.hist(
         myarray,
@@ -112,7 +112,7 @@ def     display_arithmancy_histogram(df_houses):
         label='Hufflepuff',
     )
     ### Gryffindor Histogram
-    myarray = df_houses['G'].loc[:, COURSE]
+    myarray = df_houses['G'].loc[:, course]
     myarray = myarray[~isnan(myarray)]
     plt.hist(
         myarray,
@@ -122,7 +122,7 @@ def     display_arithmancy_histogram(df_houses):
         label='Gryffindor',
     )
     ### Slytherin Histogram
-    myarray = df_houses['S'].loc[:, COURSE]
+    myarray = df_houses['S'].loc[:, course]
     myarray = myarray[~isnan(myarray)]
     plt.hist(
         myarray,
@@ -135,7 +135,7 @@ def     display_arithmancy_histogram(df_houses):
     plt.legend(loc='upper left')
     plt.ylabel('number of students')
     plt.xlabel('Marks')
-    plt.title(COURSE)
+    plt.title(course)
     # Adds major gridlines
     plt.grid(color='grey', linestyle='-', linewidth=0.25, alpha=0.5)
     # Show
