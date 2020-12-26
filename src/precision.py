@@ -6,7 +6,7 @@
 #    By: obelouch <obelouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/21 17:41:37 by obelouch          #+#    #+#              #
-#    Updated: 2020/12/23 00:44:43 by obelouch         ###   ########.fr        #
+#    Updated: 2020/12/26 15:29:16 by aelouarg         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,6 @@
 ################################################################################
 
 from src.prediction import prediction, get_dict_Y
-from sklearn.metrics import accuracy_score
 from mylib.consts import bcolors
 from mylib.math import ft_sum
 import numpy as np

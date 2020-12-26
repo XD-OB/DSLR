@@ -6,7 +6,7 @@
 #    By: obelouch <obelouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/19 00:43:25 by obelouch          #+#    #+#              #
-#    Updated: 2020/12/23 01:41:55 by obelouch         ###   ########.fr        #
+#    Updated: 2020/12/26 15:42:01 by aelouarg         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,6 +26,8 @@ def     get_df_from_csv(csvFile, usecols=None):
                 )
         else:
             df = pd.read_csv(csvFile)
+
+        df = df.fillna(0)
     except:
         print('Can\'t transform the CSV into dataframe!')
         exit(1)

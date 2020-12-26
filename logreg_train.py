@@ -6,7 +6,7 @@
 #    By: obelouch <obelouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/18 18:36:47 by obelouch          #+#    #+#              #
-#    Updated: 2020/12/23 00:45:06 by obelouch         ###   ########.fr        #
+#    Updated: 2020/12/26 16:50:02 by aelouarg         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -105,6 +105,15 @@ def     set_algorithm(flags):
             exit_usage(errors.WRONG_FLAG)
         algo = option
 
+def     check_data(houses):
+    '''
+    Check House Data if empty
+    '''
+    for elt in houses: 
+        if (elt == 0):
+            print("%sError%s: Wrong Data" % (bcolors.FAIL, bcolors.ENDC))
+            exit(1)
+
 
 def     logreg_train():
     '''
@@ -120,6 +129,8 @@ def     logreg_train():
         filename,
         [1, 8, 9, 10, 11, 12, 13, 17, 18]
     )
+    # Test House Coulmn:
+    check_data(trainSet.loc[:, "Hogwarts House"])
     # Print Loading:
     print_loading()
     # The X (features) Matrice [m x 9]
