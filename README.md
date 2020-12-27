@@ -63,10 +63,10 @@ Some features are homogenous or coherant with other ones, so there existance is 
 Output a file named: **./weights.csv** that contain the weights of the model.
 
 In the end of the training the program output the: (using the training set)
-- Accuracy of the model ** 98.20% ** 
+- Accuracy of the model 98.06% 
 - Confusion Matrix
 - F1 Score
-- Balanced Accuracy ** 98.80% **
+- Balanced Accuracy 98.71%
 
 
 # Predict with the model
@@ -81,3 +81,11 @@ Output a file named: **./houses.csv** that contain the Indexs and the predicted 
 ### pip3 install pandas
 ### pip3 install matplotlib
 ### pip3 install seaborn
+
+# Grade
+- ✔️ 125   [ Accuracy: (training data: 98.06%) (evaluation data: 99%) ]
+- Miss McGonagall is very happy for the results 🎉🥳
+
+# Owners:
+### obelouch 1337
+### obelouch 1337
