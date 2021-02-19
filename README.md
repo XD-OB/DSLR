@@ -56,7 +56,7 @@ Some features are homogenous or coherant with other ones, so there existance is 
 
 # Training the model
 
-### python3 logreg_train.py [-BGD | -SGD] <_train dataset_>
+### `python3 logreg_train.py [-BGD | -SGD] <_train dataset_>`
 *   **-BGD**: Batch Gradient Descent Algorithm
 *   **-SGD**: Stochastic Gradient Descent Algorithm
 
@@ -78,9 +78,9 @@ Output a file named: **./houses.csv** that contain the Indexs and the predicted 
 
 
 # Packages needed
-### pip3 install pandas
-### pip3 install matplotlib
-### pip3 install seaborn
+### `pip3 install pandas`
+### `pip3 install matplotlib`
+### `pip3 install seaborn`
 
 # Grade
 - ✔️ 125   [ Accuracy: (training data: 98.06%) (evaluation data: 99%) ]
