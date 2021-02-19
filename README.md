@@ -78,9 +78,9 @@ Output a file named: **./houses.csv** that contain the Indexs and the predicted 
 
 
 # Packages needed
-### `pip3 install pandas`
-### `pip3 install matplotlib`
-### `pip3 install seaborn`
+- `pip3 install pandas`
+- `pip3 install matplotlib`
+- `pip3 install seaborn`
 
 # Grade
 - ✔️ 125   [ Accuracy: (training data: 98.06%) (evaluation data: 99%) ]
