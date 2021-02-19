@@ -71,7 +71,7 @@ In the end of the training the program output the: (using the training set)
 
 # Predict with the model
 
-### python3 logreg_predict.py [-p] <_dataset_> <_weights_>
+### `python3 logreg_predict.py [-p] <_dataset_> <_weights_>`
 *   **-p**: Print the result with the students names in the stdout
 
 Output a file named: **./houses.csv** that contain the Indexs and the predicted house affected to the students.
