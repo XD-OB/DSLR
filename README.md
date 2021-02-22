@@ -87,8 +87,8 @@ Output a file named: **./houses.csv** that contain the Indexs and the predicted 
 - Miss McGonagall is very happy for the results 🎉🥳
 
 # Owners:
-- Oussama Belouche 1337
-- Anas Elouargui   1337
+- **Oussama Belouche** 1337
+- **Anas Elouargui**   1337
 
 #
 [![forthebadge](https://forthebadge.com/images/badges/made-with-python.svg)](https://forthebadge.com)
